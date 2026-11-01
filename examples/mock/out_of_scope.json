@@ -1,0 +1,52 @@
+{
+  "status": "needs_clarification",
+  "answer": "现有资料不足，无法给出有依据的答案。",
+  "citations": [],
+  "gaps": [
+    "缺少相关制度或产品资料"
+  ],
+  "clarifying_question": "请提供适用资料。",
+  "error": null,
+  "trace": [
+    {
+      "step": 1,
+      "action": [
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "公司食堂几点开门？"
+          }
+        }
+      ],
+      "previous_observations": [],
+      "decision_basis": "依据用户问题选择初始动作"
+    },
+    {
+      "step": 1,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "公司食堂几点开门？"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 0,
+        "ids": []
+      }
+    },
+    {
+      "step": 2,
+      "action": "finish",
+      "previous_observations": [
+        {
+          "ok": true,
+          "hit_count": 0,
+          "ids": []
+        }
+      ],
+      "decision_basis": "依据上轮工具观察选择下一步动作"
+    }
+  ],
+  "mode": "mock",
+  "model": "mock",
+  "executed_at_utc": "2026-11-01T07:59:59.552087+00:00"
+}

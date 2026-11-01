@@ -1,0 +1,15 @@
+[project]
+name = "enterprise-qa-agent"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+  "langgraph==1.2.19",
+  "langchain-openai==1.7.3",
+  "python-dotenv==1.2.4",
+]
+
+[project.optional-dependencies]
+test = ["pytest==9.2.0"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]

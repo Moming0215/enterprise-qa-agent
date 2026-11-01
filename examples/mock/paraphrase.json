@@ -1,0 +1,95 @@
+{
+  "status": "answered",
+  "answer": "员工每周最多可申请两天远程办公，须提前一天获得直属主管批准。",
+  "citations": [
+    {
+      "doc_id": "D03",
+      "snippet_id": "S1",
+      "quote": "员工每周最多可申请两天远程办公，须提前一天获得直属主管批准。"
+    }
+  ],
+  "gaps": [],
+  "clarifying_question": null,
+  "error": null,
+  "trace": [
+    {
+      "step": 1,
+      "action": [
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "每周能居家办公几日？"
+          }
+        }
+      ],
+      "previous_observations": [],
+      "decision_basis": "依据用户问题选择初始动作"
+    },
+    {
+      "step": 1,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "每周能居家办公几日？"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 1,
+        "ids": [
+          "D03/S1"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "action": [
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "D03",
+            "snippet_id": "S1"
+          }
+        }
+      ],
+      "previous_observations": [
+        {
+          "ok": true,
+          "hit_count": 1,
+          "ids": [
+            "D03/S1"
+          ]
+        }
+      ],
+      "decision_basis": "依据上轮工具观察选择下一步动作"
+    },
+    {
+      "step": 2,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "D03",
+        "snippet_id": "S1"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "D03",
+        "snippet_id": "S1",
+        "characters": 30
+      }
+    },
+    {
+      "step": 3,
+      "action": "finish",
+      "previous_observations": [
+        {
+          "ok": true,
+          "doc_id": "D03",
+          "snippet_id": "S1",
+          "characters": 30
+        }
+      ],
+      "decision_basis": "依据上轮工具观察选择下一步动作"
+    }
+  ],
+  "mode": "mock",
+  "model": "mock",
+  "executed_at_utc": "2026-11-01T07:59:59.549077+00:00"
+}
