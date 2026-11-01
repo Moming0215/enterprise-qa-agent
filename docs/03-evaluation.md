@@ -46,4 +46,4 @@
 
 真实模型输入在 [`inputs/`](../examples/video_tool_kb/inputs/)：字幕校对最终返回 `answered`（[`subtitle.json`](../examples/video_tool_kb/subtitle.json)）；草稿保留冲突返回 `needs_clarification` 并引用 K13/K14（[`retention_conflict.json`](../examples/video_tool_kb/retention_conflict.json)）；4K HDR 无依据时返回 `needs_clarification`（[`four_k_unknown.json`](../examples/video_tool_kb/four_k_unknown.json)）；一次读取故障后成功补查（[`read_failure.json`](../examples/video_tool_kb/read_failure.json)）。字幕问题前两次模型最终输出无法解析的 JSON，Agent 正确返回 `incomplete`，记录见 [`subtitle_first_attempt.json`](../examples/video_tool_kb/subtitle_first_attempt.json) 和 [`subtitle_second_attempt.json`](../examples/video_tool_kb/subtitle_second_attempt.json)。这说明在线成功不稳定，后续应增加受约束的输出格式及有限修复机制。
 
-Mock 在较大语料下会顺序读取全部候选，可能引用无关文档；其测试只证明冲突双方不会被漏掉，不能证明模型筛选证据的质量。在线记录和实际原文核对由 [`test_video_tool_kb.py`](../tests/test_video_tool_kb.py) 执行。所有业务制度与数值均为虚构设定。
+Mock 在较大语料下会顺序读取全部候选，可能引用无关文档；其测试只证明冲突双方不会被漏掉，不能证明模型筛选证据的质量。在线记录和实际原文核对由 [`test_video_tool_kb.py`](../tests/test_video_tool_kb.py) 执行。加入此资料集后全套测试为 37 passed，实际输出见 [`test-results.txt`](../examples/video_tool_kb/test-results.txt)。所有业务制度与数值均为虚构设定。

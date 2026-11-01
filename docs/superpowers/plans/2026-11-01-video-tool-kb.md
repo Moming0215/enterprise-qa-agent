@@ -16,4 +16,4 @@
 - [x] Add labeled positive, conflict, paraphrase, and negative retrieval cases; build index and inspect scores.
 - [x] Add tests for ingestion, source citations, conflict handling, and absent information.
 - [x] Save actual index manifest, retrieval metrics, and Agent traces; document commands and limitations.
-- [ ] Run full suite, scan staged files for secrets, commit and attempt GitHub push.
+- [x] Run full suite, scan staged files for secrets, commit and attempt GitHub push.
