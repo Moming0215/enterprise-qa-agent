@@ -37,3 +37,12 @@ def test_online_citations_are_exact_source_text():
             assert source["ok"] and citation["quote"] in source["text"]
     assert "两天" in load_case("clear")["answer"]
     assert "一天" in load_case("replaced")["answer"]
+
+
+def test_single_policy_source_can_answer_without_conflict():
+    case = load_case("d01_only")
+    assert case["status"] == "answered"
+    assert {citation["doc_id"] for citation in case["citations"]} == {"D01"}
+    assert "30天" in case["answer"]
+    source = KnowledgeBase(ROOT / "examples" / "d01-only-documents.json").read_snippet("D01", "S1")
+    assert case["citations"][0]["quote"] in source["text"]

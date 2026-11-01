@@ -38,5 +38,6 @@ Copy-Item .env.example .env
 - 六场景测试：[`tests/test_scenarios.py`](tests/test_scenarios.py)
 - 输入与实际记录：[`examples/`](examples/)
 - 需求、设计、评估、AI 使用与复盘：[`docs/`](docs/)
+- 企业杂乱文档扩展方案（尚未实现）：[`docs/06-enterprise-rag-extension.md`](docs/06-enterprise-rag-extension.md)
 
 项目借鉴 [LangChain ReAct Agent 模板](https://github.com/langchain-ai/react-agent)的模型—工具循环模式，未直接复制其源文件。使用 LangGraph 1.x 的 `StateGraph`、消息 reducer 和条件边负责循环；资料检索、引用验证、状态边界和 Trace 为本项目代码。
