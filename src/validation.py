@@ -14,6 +14,7 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict]) -
     citations = answer.get("citations", [])
     if not isinstance(citations, list):
         return incomplete("invalid_citations")
+    verified_citations = []
     for citation in citations:
         if not isinstance(citation, dict):
             return incomplete("invalid_citation")
@@ -21,6 +22,11 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict]) -
         quote = citation.get("quote")
         if key not in read_evidence or not isinstance(quote, str) or not quote or quote not in read_evidence[key]["text"]:
             return incomplete("citation_not_in_read_source")
+        verified = {"doc_id": key[0], "snippet_id": key[1], "quote": quote}
+        for field in ("source_file", "source_location", "version_date", "scope"):
+            if field in read_evidence[key]:
+                verified[field] = read_evidence[key][field]
+        verified_citations.append(verified)
     competing = {}
     for candidate in candidates:
         competing.setdefault(candidate["topic"], set()).add((candidate["doc_id"], candidate["snippet_id"]))
@@ -44,7 +50,7 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict]) -
     normalized = {
         "status": answer["status"],
         "answer": "",
-        "citations": citations,
+        "citations": verified_citations,
         "gaps": answer.get("gaps") if isinstance(answer.get("gaps"), list) else [],
         "clarifying_question": answer.get("clarifying_question") if isinstance(answer.get("clarifying_question"), str) and answer.get("clarifying_question") else None,
         "error": answer.get("error") if isinstance(answer.get("error"), str) and answer.get("error") else None,

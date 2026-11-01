@@ -1,0 +1,18 @@
+[
+  {"query":"报销期限多久？","relevant_doc_ids":["D01","D02"],"conflict":true},
+  {"query":"费用发生后几天内申请报销？","relevant_doc_ids":["D01","D02"],"conflict":true},
+  {"query":"报账要在多长时间内提交？","relevant_doc_ids":["D01","D02"],"conflict":true},
+  {"query":"发票提交申请的截止时间是什么？","relevant_doc_ids":["D01","D02"],"conflict":true},
+  {"query":"每周允许远程办公几天？","relevant_doc_ids":["D03"],"conflict":false},
+  {"query":"在家办公之前需要谁批准？","relevant_doc_ids":["D03"],"conflict":false},
+  {"query":"居家工作一周能有几天？","relevant_doc_ids":["D03"],"conflict":false},
+  {"query":"远程办公要提前多久申请？","relevant_doc_ids":["D03"],"conflict":false},
+  {"query":"能否导出带字幕的视频？","relevant_doc_ids":["D04"],"conflict":false},
+  {"query":"视频文件能带字幕吗？","relevant_doc_ids":["D04"],"conflict":false},
+  {"query":"剪辑器输出视频时可以包含文字字幕吗？","relevant_doc_ids":["D04"],"conflict":false},
+  {"query":"产品支持字幕一起导出吗？","relevant_doc_ids":["D04"],"conflict":false},
+  {"query":"食堂几点开门？","relevant_doc_ids":[],"conflict":false},
+  {"query":"年假有多少天？","relevant_doc_ids":[],"conflict":false},
+  {"query":"员工工牌如何补办？","relevant_doc_ids":[],"conflict":false},
+  {"query":"产品支持4K导出吗？","relevant_doc_ids":[],"conflict":false}
+]

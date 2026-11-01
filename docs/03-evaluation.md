@@ -2,7 +2,7 @@
 
 ## 离线流程测试
 
-`python -m pytest -q`：18 passed（2026-11-01，本机 Python 3.12.4；实际输出见 [`examples/test-results.txt`](../examples/test-results.txt)）。测试覆盖六个验收场景、引用越界、超限、资料替换后输出变化、Windows 控制台编码，并校验在线记录的状态与逐字引用。CLI Mock 实际输出位于 [`examples/mock/`](../examples/mock/)，输入位于 [`examples/inputs/`](../examples/inputs/)。Mock 结果仅证明流程，不证明真实模型决策。
+原有基线测试为 18 passed，实际输出见 [`examples/test-results.txt`](../examples/test-results.txt)。加入 PDF/Markdown 摄取、混合检索、元数据溯源、检索评估和索引 Agent 测试后，全套结果见 [`examples/hybrid/test-results.txt`](../examples/hybrid/test-results.txt)。测试覆盖六个验收场景、引用越界、超限、资料替换后输出变化、损坏 PDF、同名文件、部分摄取失败和混合检索。CLI Mock 实际输出位于 [`examples/mock/`](../examples/mock/)。Mock 仅证明流程，不证明真实模型决策。
 
 ## 在线模型评估
 
@@ -23,6 +23,19 @@
 
 ## 已知限制
 
-检索是针对合成小语料的确定性主题词匹配；未知表述可能漏召回。冲突检查对同主题不同文本采取保守处理，可能把兼容但措辞不同的资料判为待确认。模型输出 JSON 及引用若不合法，将返回 `incomplete`，不会自动修复。工具故障注入仅用于可复现验证。
+原有 JSON 基线检索仍是针对合成小语料的确定性主题词匹配。新增索引使用中文向量与 BM25，引用带原文件位置；但语料仍小，主题元数据仍需人工提供。冲突检查对同主题不同文本采取保守处理，可能把兼容但措辞不同的资料判为待确认。模型输出 JSON 及引用若不合法，将返回 `incomplete`。工具故障注入仅用于可复现验证。
 
-当前没有人工标注的检索评测集，也没有向量检索，因此不报告召回率。企业文档摄取与评估扩展见 [`06-enterprise-rag-extension.md`](06-enterprise-rag-extension.md)。
+### 混合检索实测（2026-11-01）
+
+使用 [`data/source_docs/`](../data/source_docs/) 的 4 份合成 Markdown、[`data/eval_queries.json`](../data/eval_queries.json) 的 16 条人工标注合成查询（12 条有相关文档、4 条无答案），运行 `src.evaluate_retrieval`。实际逐题结果见 [`examples/hybrid/retrieval_metrics.json`](../examples/hybrid/retrieval_metrics.json)，建索引报告见 [`examples/hybrid/index_manifest.json`](../examples/hybrid/index_manifest.json)。
+
+| 指标 | 混合检索 | 原 JSON 基线 |
+|---|---:|---:|
+| Raw Recall@3（12 条有答案查询） | 1.0000 | 0.8333 |
+| Delivered Recall@3（含同主题冲突补查） | 1.0000 | 0.8333 |
+| 冲突双方召回（标注的冲突查询） | 1.0000 | 1.0000 |
+| 无答案查询仍返回候选的比例 | 0.5000 | 0.2500 |
+
+“无答案仍返回候选”只表示有相关候选进入 Agent，不能直接等同于虚假回答。员工卡和 4K 导出这两条无答案问题触发了候选，但在线模型仍返回资料不足（[`badge_online.json`](../examples/hybrid/badge_online.json)、[`four_k_online.json`](../examples/hybrid/four_k_online.json)）。这个小样本上的 Recall@3 不能外推到真实企业文档，阈值也未在独立数据集校准。
+
+索引路径的真实模型 Trace 分别见 [`clear.json`](../examples/hybrid/clear.json)、[`conflict.json`](../examples/hybrid/conflict.json)、[`out_of_scope.json`](../examples/hybrid/out_of_scope.json)、[`tool_failure.json`](../examples/hybrid/tool_failure.json)。结果依次为 `answered`（D03）、`needs_clarification`（D01+D02）、`needs_clarification`（无引用）、`answered`（首次读取注入失败后补查成功）。冲突引用含原 Markdown 文件、标题、版本日期和适用范围。扫描件、DOCX、ACL 和增量索引尚未实现，后续方案见 [`06-enterprise-rag-extension.md`](06-enterprise-rag-extension.md)。

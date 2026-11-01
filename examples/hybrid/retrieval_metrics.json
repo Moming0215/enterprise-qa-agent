@@ -1,0 +1,432 @@
+{
+  "hybrid": {
+    "total_queries": 16,
+    "positive_queries": 12,
+    "negative_queries": 4,
+    "conflict_queries": 4,
+    "raw_recall_at_3": 1.0,
+    "delivered_recall_at_3": 1.0,
+    "negative_candidate_rate": 0.5,
+    "conflict_pair_recall": 1.0,
+    "details": [
+      {
+        "query": "报销期限多久？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02"
+        ],
+        "delivered": [
+          "D01",
+          "D02"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "费用发生后几天内申请报销？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "delivered": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "报账要在多长时间内提交？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02"
+        ],
+        "delivered": [
+          "D01",
+          "D02"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "发票提交申请的截止时间是什么？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02",
+          "D04"
+        ],
+        "delivered": [
+          "D01",
+          "D02",
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "每周允许远程办公几天？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "在家办公之前需要谁批准？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "居家工作一周能有几天？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "远程办公要提前多久申请？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "delivered": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "能否导出带字幕的视频？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "视频文件能带字幕吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "剪辑器输出视频时可以包含文字字幕吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "产品支持字幕一起导出吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "食堂几点开门？",
+        "expected": [],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "年假有多少天？",
+        "expected": [],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "员工工牌如何补办？",
+        "expected": [],
+        "raw": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "delivered": [
+          "D01",
+          "D02",
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "产品支持4K导出吗？",
+        "expected": [],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      }
+    ]
+  },
+  "legacy": {
+    "total_queries": 16,
+    "positive_queries": 12,
+    "negative_queries": 4,
+    "conflict_queries": 4,
+    "raw_recall_at_3": 0.8333,
+    "delivered_recall_at_3": 0.8333,
+    "negative_candidate_rate": 0.25,
+    "conflict_pair_recall": 0.75,
+    "details": [
+      {
+        "query": "报销期限多久？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02"
+        ],
+        "delivered": [
+          "D01",
+          "D02"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "费用发生后几天内申请报销？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02"
+        ],
+        "delivered": [
+          "D01",
+          "D02"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "报账要在多长时间内提交？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "发票提交申请的截止时间是什么？",
+        "expected": [
+          "D01",
+          "D02"
+        ],
+        "raw": [
+          "D01",
+          "D02"
+        ],
+        "delivered": [
+          "D01",
+          "D02"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "每周允许远程办公几天？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "在家办公之前需要谁批准？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "居家工作一周能有几天？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "远程办公要提前多久申请？",
+        "expected": [
+          "D03"
+        ],
+        "raw": [
+          "D03"
+        ],
+        "delivered": [
+          "D03"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "能否导出带字幕的视频？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "视频文件能带字幕吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "剪辑器输出视频时可以包含文字字幕吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "产品支持字幕一起导出吗？",
+        "expected": [
+          "D04"
+        ],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      },
+      {
+        "query": "食堂几点开门？",
+        "expected": [],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "年假有多少天？",
+        "expected": [],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "员工工牌如何补办？",
+        "expected": [],
+        "raw": [],
+        "delivered": [],
+        "expanded": []
+      },
+      {
+        "query": "产品支持4K导出吗？",
+        "expected": [],
+        "raw": [
+          "D04"
+        ],
+        "delivered": [
+          "D04"
+        ],
+        "expanded": []
+      }
+    ]
+  }
+}

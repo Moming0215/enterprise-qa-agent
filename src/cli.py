@@ -16,13 +16,14 @@ def main() -> int:
     parser.add_argument("--max-steps", type=int, default=8)
     parser.add_argument("--fail-tool", choices=["search_documents", "read_snippet"])
     parser.add_argument("--corpus", help="Alternate synthetic document JSON file")
+    parser.add_argument("--index-dir", help="Use a prebuilt hybrid PDF/Markdown index")
     parser.add_argument("--output", help="Write output JSON to this path")
     args = parser.parse_args()
     try:
         request = json.loads(Path(args.input).read_text(encoding="utf-8"))
     except (OSError, ValueError) as exc:
         parser.error(f"cannot read input JSON: {type(exc).__name__}")
-    result = run_agent(request, args.mode, args.max_steps, args.fail_tool, args.corpus)
+    result = run_agent(request, args.mode, args.max_steps, args.fail_tool, args.corpus, args.index_dir)
     result["executed_at_utc"] = datetime.now(timezone.utc).isoformat()
     output = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:

@@ -11,6 +11,7 @@ from langgraph.graph import END, START, StateGraph
 from langgraph.graph.message import add_messages
 
 from .knowledge import KnowledgeBase
+from .hybrid_knowledge import HybridKnowledgeBase
 from .validation import incomplete, validate_answer
 
 
@@ -85,7 +86,8 @@ def _mock_reply(state: AgentState, question: str, history: list) -> AIMessage:
 
 
 def run_agent(request: dict, mode: str = "mock", max_steps: int = 8,
-              fail_tool: str | None = None, corpus_path: str | None = None) -> dict:
+              fail_tool: str | None = None, corpus_path: str | None = None,
+              index_dir: str | None = None) -> dict:
     question = request.get("question") if isinstance(request, dict) else None
     if not isinstance(question, str) or not question.strip():
         return {**incomplete("question_required"), "trace": []}
@@ -93,20 +95,27 @@ def run_agent(request: dict, mode: str = "mock", max_steps: int = 8,
         return {**incomplete("step_limit"), "trace": []}
     if mode not in {"mock", "online"}:
         return {**incomplete("invalid_mode"), "trace": []}
-    kb = KnowledgeBase(corpus_path) if corpus_path else KnowledgeBase()
-    model = None
+    if corpus_path and index_dir:
+        return {**incomplete("choose_corpus_or_index"), "trace": []}
+    history = request.get("history", [])
+    if not isinstance(history, list):
+        return {**incomplete("history_must_be_list"), "trace": []}
     if mode == "online":
         load_dotenv()
         key = os.getenv("DEEPSEEK_API_KEY")
         if not key:
             return {**incomplete("DEEPSEEK_API_KEY_missing"), "trace": []}
+    try:
+        kb = HybridKnowledgeBase(index_dir) if index_dir else (
+            KnowledgeBase(corpus_path) if corpus_path else KnowledgeBase())
+    except (ValueError, OSError) as exc:
+        return {**incomplete(f"knowledge_error:{exc}"), "trace": []}
+    model = None
+    if mode == "online":
         model = ChatOpenAI(model=os.getenv("DEEPSEEK_MODEL", "deepseek-flash"),
                            base_url=os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
                            api_key=key, extra_body={"thinking": {"type": "disabled"}}).bind_tools(TOOLS)
 
-    history = request.get("history", [])
-    if not isinstance(history, list):
-        return {**incomplete("history_must_be_list"), "trace": []}
     user_text = json.dumps({"question": question, "history": history}, ensure_ascii=False)
 
     def call_model(state: AgentState) -> dict:
@@ -190,6 +199,10 @@ def run_agent(request: dict, mode: str = "mock", max_steps: int = 8,
     try:
         state = app.invoke(initial, config={"recursion_limit": max_steps * 3 + 5})
     except Exception as exc:
+        if hasattr(kb, "close"):
+            kb.close()
         return {**incomplete(f"graph_error:{type(exc).__name__}"), "trace": []}
+    if hasattr(kb, "close"):
+        kb.close()
     return {**state["final"], "trace": state["trace"], "mode": mode,
             "model": os.getenv("DEEPSEEK_MODEL", "deepseek-flash") if mode == "online" else "mock"}
