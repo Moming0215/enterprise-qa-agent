@@ -39,3 +39,11 @@
 “无答案仍返回候选”只表示有相关候选进入 Agent，不能直接等同于虚假回答。员工卡和 4K 导出这两条无答案问题触发了候选，但在线模型仍返回资料不足（[`badge_online.json`](../examples/hybrid/badge_online.json)、[`four_k_online.json`](../examples/hybrid/four_k_online.json)）。这个小样本上的 Recall@3 不能外推到真实企业文档，阈值也未在独立数据集校准。
 
 索引路径的真实模型 Trace 分别见 [`clear.json`](../examples/hybrid/clear.json)、[`conflict.json`](../examples/hybrid/conflict.json)、[`out_of_scope.json`](../examples/hybrid/out_of_scope.json)、[`tool_failure.json`](../examples/hybrid/tool_failure.json)。结果依次为 `answered`（D03）、`needs_clarification`（D01+D02）、`needs_clarification`（无引用）、`answered`（首次读取注入失败后补查成功）。冲突引用含原 Markdown 文件、标题、版本日期和适用范围。扫描件、DOCX、ACL 和增量索引尚未实现，后续方案见 [`06-enterprise-rag-extension.md`](06-enterprise-rag-extension.md)。
+
+### 短视频工具企业模拟知识库
+
+新增 [`data/video_tool_kb/`](../data/video_tool_kb/) 的 14 份合成业务资料、20 条标注查询（15 条有答案、5 条无答案，其中 2 条标注冲突）。建索引报告见 [`index_manifest.json`](../examples/video_tool_kb/index_manifest.json)，逐题检索结果见 [`retrieval_metrics.json`](../examples/video_tool_kb/retrieval_metrics.json)。本机实际 Raw/Delivered Recall@3 均为 1.0000，冲突双方召回为 1.0000；无答案查询仍有候选的比例为 0.6000。这些数字只反映本组由同一套资料设计的合成题，存在明显同源偏差，不代表真实企业效果。
+
+真实模型输入在 [`inputs/`](../examples/video_tool_kb/inputs/)：字幕校对最终返回 `answered`（[`subtitle.json`](../examples/video_tool_kb/subtitle.json)）；草稿保留冲突返回 `needs_clarification` 并引用 K13/K14（[`retention_conflict.json`](../examples/video_tool_kb/retention_conflict.json)）；4K HDR 无依据时返回 `needs_clarification`（[`four_k_unknown.json`](../examples/video_tool_kb/four_k_unknown.json)）；一次读取故障后成功补查（[`read_failure.json`](../examples/video_tool_kb/read_failure.json)）。字幕问题前两次模型最终输出无法解析的 JSON，Agent 正确返回 `incomplete`，记录见 [`subtitle_first_attempt.json`](../examples/video_tool_kb/subtitle_first_attempt.json) 和 [`subtitle_second_attempt.json`](../examples/video_tool_kb/subtitle_second_attempt.json)。这说明在线成功不稳定，后续应增加受约束的输出格式及有限修复机制。
+
+Mock 在较大语料下会顺序读取全部候选，可能引用无关文档；其测试只证明冲突双方不会被漏掉，不能证明模型筛选证据的质量。在线记录和实际原文核对由 [`test_video_tool_kb.py`](../tests/test_video_tool_kb.py) 执行。所有业务制度与数值均为虚构设定。

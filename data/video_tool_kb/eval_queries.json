@@ -1,0 +1,22 @@
+[
+  {"query":"自动字幕生成后还要人工校对吗？","relevant_doc_ids":["K01"]},
+  {"query":"字幕里的人名和数字不准怎么办？","relevant_doc_ids":["K01"]},
+  {"query":"编辑器能导出什么格式和画幅？","relevant_doc_ids":["K02"]},
+  {"query":"模板使用的音乐授权到期了还能上架吗？","relevant_doc_ids":["K03"]},
+  {"query":"AI 生成的脚本能保证事实正确和审核通过吗？","relevant_doc_ids":["K04"]},
+  {"query":"审阅者能修改团队项目草稿吗？","relevant_doc_ids":["K05"]},
+  {"query":"移动端灰度前要通过哪些发布门禁？","relevant_doc_ids":["K06"]},
+  {"query":"官方示例视频发现疑似侵权应如何审核？","relevant_doc_ids":["K07"]},
+  {"query":"收到版权投诉后客服要记录什么？","relevant_doc_ids":["K08"]},
+  {"query":"用户要求删除云端项目时怎么处理？","relevant_doc_ids":["K09"]},
+  {"query":"云端导出故障影响灰度版本时如何响应？","relevant_doc_ids":["K10"]},
+  {"query":"应用商店购买的订阅如何咨询退款？","relevant_doc_ids":["K11"]},
+  {"query":"技术工单升级研发需要哪些信息？","relevant_doc_ids":["K12"]},
+  {"query":"删除的云端草稿在回收站保留多久？","relevant_doc_ids":["K13","K14"],"conflict":true},
+  {"query":"误删草稿后还有几天可以恢复？","relevant_doc_ids":["K13","K14"],"conflict":true},
+  {"query":"我们支持 4K HDR 导出吗？","relevant_doc_ids":[]},
+  {"query":"现在会员套餐多少钱？","relevant_doc_ids":[]},
+  {"query":"客服首响 SLA 是几小时？","relevant_doc_ids":[]},
+  {"query":"员工食堂几点开门？","relevant_doc_ids":[]},
+  {"query":"小影科技现任 CEO 是谁？","relevant_doc_ids":[]}
+]

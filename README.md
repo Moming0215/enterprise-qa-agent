@@ -43,6 +43,18 @@ Copy-Item .env.example .env
 
 该路径按标题/页码切分父片段，再切子片段建立中文 dense + BM25 sparse 索引，融合候选并读取父片段。来源定位和版本信息随引用返回；同一已标注主题的其他资料会补入候选，避免 top-k 隐藏冲突。无侧车元数据也能入库，但主题为 `unknown` 时无法做同主题冲突扩展。扫描 PDF、DOCX、权限过滤和增量索引尚未支持，详见 [`docs/06-enterprise-rag-extension.md`](docs/06-enterprise-rag-extension.md)。
 
+## 短视频工具企业模拟知识库
+
+[`data/video_tool_kb/`](data/video_tool_kb/) 新增 14 份跨产品、内容安全、发布、客服和数据流程的合成资料，以及 20 条标注检索题。它以“小影科技（模拟）”为背景，**不代表该公司的真实产品、政策或承诺**。K13/K14 故意给出相互矛盾且未说明优先级的草稿保留期限，用于验证冲突处理。
+
+```powershell
+.\.venv\Scripts\python.exe -m src.ingest_cli --source data/video_tool_kb/sources --index data/index/video_tool_kb
+.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --output examples/video_tool_kb/retention_conflict.json
+.\.venv\Scripts\python.exe -m pytest tests/test_video_tool_kb.py -q
+```
+
+实际检索指标与在线 Trace 见 [`examples/video_tool_kb/`](examples/video_tool_kb/)；首次在线字幕问答出现两次 `invalid_model_json`，失败记录也保留在目录内。该目录下的资料用途与边界详见 [`data/video_tool_kb/README.md`](data/video_tool_kb/README.md)。
+
 ## 评审入口
 
 - 资料：[`data/documents.json`](data/documents.json)

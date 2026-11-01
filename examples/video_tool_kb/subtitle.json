@@ -1,0 +1,196 @@
+{
+  "status": "answered",
+  "answer": "# K01 自动字幕工作流（模拟）\n\n适用对象：视频编辑器产品团队与客服。负责人：编辑体验组。\n\n编辑器可为导入的视频生成字幕初稿。创作者需要逐句检查人名、数字与专有名词；字幕初稿不应被描述为无需校对的准确转写。生成后可修改字幕文本与时间轴，再导出带字幕的视频。\n\n若用户报告字幕与画面不同步，客服先确认素材帧率、语言和导出前的预览状态，再交由编辑体验组复现。本文不承诺识别准确率或处理耗时。\n# K04 AI 辅助创作说明（模拟）\n\n适用对象：产品、运营与客服。负责人：AI 产品组。\n\n模拟产品的 AI 辅助功能可生成脚本提纲和字幕改写建议，输出供创作者编辑。对外说明应使用“建议”或“初稿”，不得保证内容事实正确、版权无争议或平台审核一定通过。涉及产品参数、价格、法规或人物事实时，发布前须由内容负责人核对独立来源。\n\n本文不包含自动发布能力，也没有任何“效率提升百分比”的验证数据。客服不得据此承诺效果。",
+  "citations": [
+    {
+      "doc_id": "K01",
+      "snippet_id": "P0001",
+      "quote": "创作者需要逐句检查人名、数字与专有名词；字幕初稿不应被描述为无需校对的准确转写。",
+      "source_file": "K01-subtitles.md",
+      "source_location": "section:K01 自动字幕工作流（模拟）",
+      "version_date": "2026-09-01",
+      "scope": "模拟编辑器产品与客服"
+    },
+    {
+      "doc_id": "K01",
+      "snippet_id": "P0001",
+      "quote": "生成后可修改字幕文本与时间轴，再导出带字幕的视频。",
+      "source_file": "K01-subtitles.md",
+      "source_location": "section:K01 自动字幕工作流（模拟）",
+      "version_date": "2026-09-01",
+      "scope": "模拟编辑器产品与客服"
+    },
+    {
+      "doc_id": "K04",
+      "snippet_id": "P0001",
+      "quote": "输出供创作者编辑。对外说明应使用“建议”或“初稿”，不得保证内容事实正确、版权无争议或平台审核一定通过。",
+      "source_file": "K04-ai-assist.md",
+      "source_location": "section:K04 AI 辅助创作说明（模拟）",
+      "version_date": "2026-09-03",
+      "scope": "模拟产品、运营与客服"
+    },
+    {
+      "doc_id": "K04",
+      "snippet_id": "P0001",
+      "quote": "涉及产品参数、价格、法规或人物事实时，发布前须由内容负责人核对独立来源。",
+      "source_file": "K04-ai-assist.md",
+      "source_location": "section:K04 AI 辅助创作说明（模拟）",
+      "version_date": "2026-09-03",
+      "scope": "模拟产品、运营与客服"
+    }
+  ],
+  "gaps": [],
+  "clarifying_question": null,
+  "error": null,
+  "trace": [
+    {
+      "step": 1,
+      "action": [
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "自动字幕生成 人工校对"
+          }
+        },
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "字幕 校对 审核 要求"
+          }
+        }
+      ],
+      "previous_observations": [],
+      "decision_basis": "用户提出问题，尚无工具观察"
+    },
+    {
+      "step": 1,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "自动字幕生成 人工校对"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 5,
+        "ids": [
+          "K01/P0001",
+          "K04/P0001",
+          "K14/P0001",
+          "K13/P0001",
+          "K08/P0001"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "字幕 校对 审核 要求"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 5,
+        "ids": [
+          "K01/P0001",
+          "K07/P0001",
+          "K12/P0001",
+          "K04/P0001",
+          "K03/P0001"
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "action": [
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K01",
+            "snippet_id": "P0001"
+          }
+        },
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K04",
+            "snippet_id": "P0001"
+          }
+        }
+      ],
+      "previous_observations": [
+        {
+          "ok": true,
+          "hit_count": 5,
+          "ids": [
+            "K01/P0001",
+            "K04/P0001",
+            "K14/P0001",
+            "K13/P0001",
+            "K08/P0001"
+          ]
+        },
+        {
+          "ok": true,
+          "hit_count": 5,
+          "ids": [
+            "K01/P0001",
+            "K07/P0001",
+            "K12/P0001",
+            "K04/P0001",
+            "K03/P0001"
+          ]
+        }
+      ],
+      "decision_basis": "检索命中 5 条；检索命中 5 条"
+    },
+    {
+      "step": 3,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K01",
+        "snippet_id": "P0001"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K01",
+        "snippet_id": "P0001",
+        "characters": 196
+      }
+    },
+    {
+      "step": 4,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K04",
+        "snippet_id": "P0001"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K04",
+        "snippet_id": "P0001",
+        "characters": 209
+      }
+    },
+    {
+      "step": 5,
+      "action": "finish",
+      "previous_observations": [
+        {
+          "ok": true,
+          "doc_id": "K01",
+          "snippet_id": "P0001",
+          "characters": 196
+        },
+        {
+          "ok": true,
+          "doc_id": "K04",
+          "snippet_id": "P0001",
+          "characters": 209
+        }
+      ],
+      "decision_basis": "已读取 K01/P0001；已读取 K04/P0001"
+    }
+  ],
+  "mode": "online",
+  "model": "deepseek-flash",
+  "executed_at_utc": "2026-11-01T09:24:43.166647+00:00"
+}

@@ -1,0 +1,328 @@
+{
+  "total_queries": 20,
+  "positive_queries": 15,
+  "negative_queries": 5,
+  "conflict_queries": 2,
+  "raw_recall_at_3": 1.0,
+  "delivered_recall_at_3": 1.0,
+  "negative_candidate_rate": 0.6,
+  "conflict_pair_recall": 1.0,
+  "details": [
+    {
+      "query": "自动字幕生成后还要人工校对吗？",
+      "expected": [
+        "K01"
+      ],
+      "raw": [
+        "K01",
+        "K04",
+        "K08"
+      ],
+      "delivered": [
+        "K01",
+        "K04",
+        "K08"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "字幕里的人名和数字不准怎么办？",
+      "expected": [
+        "K01"
+      ],
+      "raw": [
+        "K01",
+        "K02",
+        "K04"
+      ],
+      "delivered": [
+        "K01",
+        "K02",
+        "K04"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "编辑器能导出什么格式和画幅？",
+      "expected": [
+        "K02"
+      ],
+      "raw": [
+        "K01",
+        "K02",
+        "K10"
+      ],
+      "delivered": [
+        "K01",
+        "K02",
+        "K10"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "模板使用的音乐授权到期了还能上架吗？",
+      "expected": [
+        "K03"
+      ],
+      "raw": [
+        "K03",
+        "K07",
+        "K08"
+      ],
+      "delivered": [
+        "K03",
+        "K07",
+        "K08"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "AI 生成的脚本能保证事实正确和审核通过吗？",
+      "expected": [
+        "K04"
+      ],
+      "raw": [
+        "K03",
+        "K04",
+        "K07"
+      ],
+      "delivered": [
+        "K03",
+        "K04",
+        "K07"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "审阅者能修改团队项目草稿吗？",
+      "expected": [
+        "K05"
+      ],
+      "raw": [
+        "K02",
+        "K03",
+        "K05"
+      ],
+      "delivered": [
+        "K02",
+        "K03",
+        "K05"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "移动端灰度前要通过哪些发布门禁？",
+      "expected": [
+        "K06"
+      ],
+      "raw": [
+        "K04",
+        "K06",
+        "K10"
+      ],
+      "delivered": [
+        "K04",
+        "K06",
+        "K10"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "官方示例视频发现疑似侵权应如何审核？",
+      "expected": [
+        "K07"
+      ],
+      "raw": [
+        "K03",
+        "K07",
+        "K08"
+      ],
+      "delivered": [
+        "K03",
+        "K07",
+        "K08"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "收到版权投诉后客服要记录什么？",
+      "expected": [
+        "K08"
+      ],
+      "raw": [
+        "K08",
+        "K10",
+        "K12"
+      ],
+      "delivered": [
+        "K08",
+        "K10",
+        "K12"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "用户要求删除云端项目时怎么处理？",
+      "expected": [
+        "K09"
+      ],
+      "raw": [
+        "K09",
+        "K13",
+        "K14"
+      ],
+      "delivered": [
+        "K09",
+        "K13",
+        "K14"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "云端导出故障影响灰度版本时如何响应？",
+      "expected": [
+        "K10"
+      ],
+      "raw": [
+        "K02",
+        "K06",
+        "K10"
+      ],
+      "delivered": [
+        "K02",
+        "K06",
+        "K10"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "应用商店购买的订阅如何咨询退款？",
+      "expected": [
+        "K11"
+      ],
+      "raw": [
+        "K01",
+        "K03",
+        "K11"
+      ],
+      "delivered": [
+        "K01",
+        "K03",
+        "K11"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "技术工单升级研发需要哪些信息？",
+      "expected": [
+        "K12"
+      ],
+      "raw": [
+        "K03",
+        "K06",
+        "K12"
+      ],
+      "delivered": [
+        "K03",
+        "K06",
+        "K12"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "删除的云端草稿在回收站保留多久？",
+      "expected": [
+        "K13",
+        "K14"
+      ],
+      "raw": [
+        "K09",
+        "K13",
+        "K14"
+      ],
+      "delivered": [
+        "K09",
+        "K13",
+        "K14"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "误删草稿后还有几天可以恢复？",
+      "expected": [
+        "K13",
+        "K14"
+      ],
+      "raw": [
+        "K05",
+        "K13",
+        "K14"
+      ],
+      "delivered": [
+        "K05",
+        "K13",
+        "K14"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "我们支持 4K HDR 导出吗？",
+      "expected": [],
+      "raw": [
+        "K02",
+        "K10",
+        "K12"
+      ],
+      "delivered": [
+        "K02",
+        "K10",
+        "K12"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "现在会员套餐多少钱？",
+      "expected": [],
+      "raw": [
+        "K11",
+        "K13",
+        "K14"
+      ],
+      "delivered": [
+        "K11",
+        "K13",
+        "K14"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "客服首响 SLA 是几小时？",
+      "expected": [],
+      "raw": [
+        "K08",
+        "K10",
+        "K12"
+      ],
+      "delivered": [
+        "K08",
+        "K10",
+        "K12"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "员工食堂几点开门？",
+      "expected": [],
+      "raw": [],
+      "delivered": [],
+      "expanded": []
+    },
+    {
+      "query": "小影科技现任 CEO 是谁？",
+      "expected": [],
+      "raw": [],
+      "delivered": [],
+      "expanded": []
+    }
+  ]
+}
