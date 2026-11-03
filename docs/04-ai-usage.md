@@ -12,4 +12,4 @@
 
 仓库首页的 HTML 流程示意图、由 Chrome 渲染的 PNG 预览及 README 版式和文案，也由 Codex 辅助制作；考生提交前应自行查看并按实际贡献说明。
 
-视觉改版时，Codex 阅读并应用 [Unslop by Damir Sokolovsky](https://github.com/heydamir/unslop) 的公开 skill 审查标准（CC BY 4.0），移除旧图的渐变光晕、emoji 图标和模板化卡片，改用本项目 K13/K14 冲突资料作为核心画面。未复制该项目的示例界面或代码。
+流程图视觉审查参考了 [Unslop by Damir Sokolovsky](https://github.com/heydamir/unslop) 的公开 skill（CC BY 4.0）。根据用户反馈，最终保留原有深色三阶段结构、内容与图标，去除渐变和发光效果，并放大文字；未复制该项目的示例界面或代码。
