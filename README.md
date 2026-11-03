@@ -1,76 +1,116 @@
-# 企业知识问答 Agent（题号 3）
+# 有证据的企业知识问答 Agent
 
-框架版本：LangGraph 1.2.19、langchain-openai 1.7.3；索引使用 Qdrant Client 1.20.0 与 FastEmbed 0.9.1（完整依赖见 `pyproject.toml`）。
+> **题号 3 · 企业知识问答 Agent**｜让员工找到答案，也看得见答案从哪里来。
 
-使用合成制度和产品资料演示模型选择检索、读取原文、补查或结束的工具循环。CLI 输出回答、引用、资料缺口、状态和 Trace。真实模型为 DeepSeek `deepseek-flash`；Mock 模式仅验证流程，不能证明真实模型决策效果。
+员工问“云端草稿能保留多久？”时，系统不会因为某份文档排在搜索结果第一位就回答“30 天”。它会继续读取另一份写着“15 天”的资料，列出两份原文和版本，并请用户确认适用制度。这是本项目的核心：**检索是找线索，读原文是取证，回答要过校验。**
 
-确定答案要通过已读原文的逐字引用、同主题竞争资料检查和保守的问答相关性检查；与问题无关或只说明“未规定”的证据会转为 `needs_clarification`。这降低无依据回答风险，但不构成通用语义正确性证明。
+本仓库是可运行的 CLI 项目，提供 DeepSeek 在线模型与离线 Mock 两条入口。所有制度、产品能力和案例均为**合成资料**，不代表真实小影科技的政策或产品承诺。
 
-## 环境与安装
+## 一眼看懂
 
-Python 3.11+。在 PowerShell 中执行：
+```mermaid
+flowchart LR
+    subgraph 建库[离线建库]
+        A[Markdown / 文本 PDF] --> B[按标题或页提取]
+        B --> C[父片段保留原文位置]
+        C --> D[子片段向量化]
+        D --> E[(本地 Qdrant 混合索引)]
+    end
+    subgraph 问答[一次问答]
+        Q[员工问题] --> M{模型选择动作}
+        M -->|检索| E
+        E --> R[融合候选并补查同主题资料]
+        R --> M
+        M -->|读取| S[原文、版本、适用范围]
+        S --> M
+        M -->|回答或追问| V{证据校验}
+        V -->|充分| Y[有引用的回答]
+        V -->|冲突或不足| N[列出缺口，请求确认]
+        V -->|工具或模型失败| F[明确未完成]
+    end
+```
+
+| 能力 | 当前实现 |
+|---|---|
+| **模型动态决策** | LangGraph 的模型与工具节点循环；模型选择检索、读原文、补查或结束，工具调用上限默认 8 次。 |
+| **混合检索** | 中文 dense 向量 `BAAI/bge-small-zh-v1.5` + jieba 分词的 `Qdrant/bm25`，按 RRF 融合；检索子片段，引用父片段。 |
+| **冲突处理** | 扩展同主题及显式引用的文档；未给适用优先级时列双方证据并追问。 |
+| **引用校验** | 引文须逐字来自本轮成功读取的片段；检查竞争资料、问题要点及“未规定”等资料缺口。失败不输出确定答案。 |
+| **可审阅 Trace** | 记录动作、工具参数、返回摘要、后续动作和简要依据，不暴露模型内部思维。 |
+| **故障边界** | 工具错误、调用超限、无效模型输出和接口故障返回明确状态；无效 JSON 最多尝试一次格式修复。 |
+
+## 三个值得亲自看的例子
+
+| 场景 | 观察结果 | 输入与真实模型记录 |
+|---|---|---|
+| **正常回答** | 自动字幕需要人工校对；答案带 K01 原文引用。 | [输入](examples/video_tool_kb/inputs/subtitle.json) · [Trace](examples/video_tool_kb/subtitle.json) |
+| **资料冲突** | K13 写 30 天，K14 写 15 天；不擅自选新版本，要求确认适用制度。 | [输入](examples/video_tool_kb/inputs/retention_conflict.json) · [Trace](examples/video_tool_kb/retention_conflict.json) |
+| **资料不足** | MP4 导出说明不能证明支持 4K HDR；请求补充资料。 | [输入](examples/video_tool_kb/inputs/four_k_unknown.json) · [Trace](examples/video_tool_kb/four_k_unknown.json) |
+
+另外保存了[一次读取失败后补查的 Trace](examples/video_tool_kb/read_failure.json)和[两次无效 JSON 的失败记录](examples/video_tool_kb/subtitle_first_attempt.json)。这些在线记录来自较早版本；最新格式修复与问答相关性拦截已通过离线测试，**2026-11-03 DeepSeek 接口返回 HTTP 503，尚未完成新版本的在线重复成功率验证**。
+
+## 快速跑起来
+
+环境：Python 3.11+、PowerShell。首次安装：
 
 ```powershell
+git clone https://github.com/Moming0215/enterprise-qa-agent.git
+cd enterprise-qa-agent
 python -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -e '.[test]'
-Copy-Item .env.example .env
+if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 ```
 
-在 `.env` 中填写 `DEEPSEEK_API_KEY=`。`.env` 已加入 `.gitignore`，不要提交密钥。在线接口默认 `https://api.deepseek.com`，模型默认 `deepseek-flash`。
-
-`requirements.lock` 记录本次运行的完整 Python 依赖版本。需要按锁定版本复现时，先执行 `pip install -r requirements.lock`，再执行 `pip install -e . --no-deps`。
-
-## 运行
-
-```powershell
-.\.venv\Scripts\python.exe -m src.cli --input examples/inputs/clear.json --mode online --output examples/online/clear.json
-.\.venv\Scripts\python.exe -m src.cli --input examples/inputs/conflict.json --mode online --output examples/online/conflict.json
-.\.venv\Scripts\python.exe -m src.cli --input examples/inputs/tool_failure.json --mode online --fail-tool read_snippet --output examples/online/tool_failure.json
-.\.venv\Scripts\python.exe -m src.cli --input examples/inputs/clear.json --mode mock --output examples/mock/clear.json
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-`--max-steps` 限制工具调用数，默认 8；达到上限返回 `incomplete`。`--corpus` 可指定替换后的合成资料 JSON。CLI 的未完成任务返回退出码 2。
-
-## PDF/Markdown 混合检索入口
-
-`data/source_docs/` 是合成资料原文件；同名 `.meta.json` 提供文档 ID、主题、版本日期和适用范围。首次运行会下载中文向量模型和 BM25 模型，需网络及模型缓存空间。索引只在本机生成，`data/index/` 不入库。
-
-```powershell
-.\.venv\Scripts\python.exe -m src.ingest_cli --source data/source_docs --index data/index
-.\.venv\Scripts\python.exe -m src.cli --input examples/inputs/conflict.json --mode online --index-dir data/index --output examples/hybrid/conflict.json
-.\.venv\Scripts\python.exe -m src.evaluate_retrieval --dataset data/eval_queries.json --index-dir data/index --output examples/hybrid/retrieval_metrics.json
-.\.venv\Scripts\python.exe -m pytest -q
-```
-
-该路径按标题/页码切分父片段，再切子片段建立中文 dense + BM25 sparse 索引，融合候选并读取父片段。来源定位和版本信息随引用返回；同一已标注主题的其他资料会补入候选，避免 top-k 隐藏冲突。无侧车元数据也能入库，但主题为 `unknown` 时无法做同主题冲突扩展。扫描 PDF、DOCX、权限过滤和增量索引尚未支持，详见 [`docs/06-enterprise-rag-extension.md`](docs/06-enterprise-rag-extension.md)。
-
-## 短视频工具企业模拟知识库
-
-[`data/video_tool_kb/`](data/video_tool_kb/) 包含 44 份跨产品、内容安全、发布、客服、数据和安全流程的合成资料，以及 70 条标注检索题。它以“小影科技（模拟）”为背景，**不代表该公司的真实产品、政策或承诺**。K13/K14 故意给出相互矛盾且未说明优先级的草稿保留期限，用于验证冲突处理。
+### 1. 建立短视频业务知识库索引
 
 ```powershell
 .\.venv\Scripts\python.exe -m src.ingest_cli --source data/video_tool_kb/sources --index data/index/video_tool_kb
-.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --output examples/video_tool_kb/retention_conflict.json
-.\.venv\Scripts\python.exe -m src.evaluate_retrieval --dataset data/video_tool_kb/eval_all.json --index-dir data/index/video_tool_kb --output examples/private/retrieval-check.json
-.\.venv\Scripts\python.exe -m pytest tests/test_video_tool_kb.py -q
 ```
 
-扩充后的检索指标见 [`examples/video_tool_kb/retrieval_metrics_extended.json`](examples/video_tool_kb/retrieval_metrics_extended.json)，早期在线 Trace 见 [`examples/video_tool_kb/`](examples/video_tool_kb/)；首次在线字幕问答出现两次 `invalid_model_json`，失败记录也保留在目录内。最终输出现在支持严格 JSON 与围栏 JSON，在线格式无效时最多追加一次无工具的 JSON 格式修复。接口不可用或修复失败仍返回 `incomplete`。该目录下的资料用途与边界详见 [`data/video_tool_kb/README.md`](data/video_tool_kb/README.md)。
+预期报告包含 `indexed_files: 44`、`failures: []`。首次向量化会下载模型；索引保存在本地 `data/index/`，不会进入 Git。
 
-70 题评估输出中的 `hybrid` 才对应本知识库；`legacy` 固定使用旧 JSON 基线，语料不同，不作横向比较。2026-11-03 DeepSeek API 返回 503，新增格式修复尚未完成真实接口的重复成功率验证；本地模拟测试与失败 Trace 见 [`examples/video_tool_kb_v2/`](examples/video_tool_kb_v2/)。
+### 2. 不用 API，检查流程
 
-## 评审入口
+```powershell
+.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode mock --index-dir data/index/video_tool_kb --max-steps 30 --output examples/private/mock-conflict.json
+.\.venv\Scripts\python.exe -m pytest -q
+```
 
-- 资料：[`data/documents.json`](data/documents.json)
-- Agent 与工具：[`src/agent.py`](src/agent.py)、[`src/knowledge.py`](src/knowledge.py)
-- 引用校验：[`src/validation.py`](src/validation.py)
-- 六场景测试：[`tests/test_scenarios.py`](tests/test_scenarios.py)
-- 输入与实际记录：[`examples/`](examples/)
-- 需求、设计、评估、AI 使用与复盘：[`docs/`](docs/)
-- 混合检索代码与评估：[`src/hybrid_knowledge.py`](src/hybrid_knowledge.py)、[`src/evaluate_retrieval.py`](src/evaluate_retrieval.py)、[`examples/hybrid/`](examples/hybrid/)
-- 企业杂乱文档后续扩展：[`docs/06-enterprise-rag-extension.md`](docs/06-enterprise-rag-extension.md)
+Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策；扩大语料后它会机械读取较多候选，所以示例将工具上限设为 30。当前测试结果为 **50 passed**，见[实际输出](examples/video_tool_kb_v2/test-results.txt)。
 
-项目借鉴 [LangChain ReAct Agent 模板](https://github.com/langchain-ai/react-agent)的模型—工具循环模式，未直接复制其源文件。使用 LangGraph 1.x 的 `StateGraph`、消息 reducer 和条件边负责循环；资料检索、引用验证、状态边界和 Trace 为本项目代码。
+### 3. 使用真实模型
 
-索引路径借鉴 MIT 许可的 [agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies) 的父子分块和 dense/sparse 混合检索思路，代码按本题证据定位与冲突规则重新实现，未复制其源文件。
+在本机 `.env` 中填写 `DEEPSEEK_API_KEY`；默认接口与模型写在 [.env.example](.env.example)。不要提交 `.env`。运行：
+
+```powershell
+.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --output examples/private/online-conflict.json
+```
+
+CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answered`、`needs_clarification`、`incomplete`）、`answer`、`citations`、`gaps`、`clarifying_question`、`error`、`trace`。`incomplete` 的退出码为 2。自定义问题参照[输入格式](examples/video_tool_kb/inputs/subtitle.json)，可加入 `history` 数组；CLI 参数见 `python -m src.cli --help`。
+
+## 资料、效果与边界
+
+[短视频工具模拟知识库](data/video_tool_kb/README.md)有 **44 份 Markdown、约 9,405 个汉字**，覆盖产品、授权、发布、客服、数据与安全流程；索引生成 104 个父片段和 104 个子片段。K13/K14 是故意保留的冲突资料。解析器也支持**可提取文字的 PDF**，有相应[测试](tests/test_hybrid_knowledge.py)。原始 JSON 小语料仍可通过 `--corpus` 使用，作为简化对照。
+
+[70 条合成标注题](data/video_tool_kb/eval_all.json)包括 55 条有答案、15 条无答案、10 条跨文档和 3 条冲突题。[逐题检索结果](examples/video_tool_kb/retrieval_metrics_extended.json)显示 Raw Recall@3 为 **0.9515**、交付候选 Recall@3 为 **0.9636**、冲突双方召回 **3/3**；跨文档题仅 **6/10** 完整召回。无答案题有 14/15 仍返回相关候选，必须由回答阶段判断证据是否足够。这是同源合成集，**不能外推为真实企业准确率**。
+
+复现检索评估：
+
+```powershell
+.\.venv\Scripts\python.exe -m src.evaluate_retrieval --dataset data/video_tool_kb/eval_all.json --index-dir data/index/video_tool_kb --output examples/private/retrieval-check.json
+```
+
+输出中的 `hybrid` 对应本知识库；`legacy` 使用另一套 JSON 小语料，不应直接比较。当前没有扫描 PDF OCR、DOCX/表格解析、文档权限控制、增量索引或通用语义蕴含证明；同主题冲突扩展依赖元数据。详见[评估记录](docs/03-evaluation.md)与[企业文档扩展设计](docs/06-enterprise-rag-extension.md)。
+
+## 从哪里看代码
+
+| 想了解 | 入口 |
+|---|---|
+| 题目需求、成功标准 | [docs/01-requirements.md](docs/01-requirements.md) |
+| Agent 决策循环与 Trace | [src/agent.py](src/agent.py) |
+| 文档摄取与混合检索 | [src/ingestion.py](src/ingestion.py) · [src/hybrid_knowledge.py](src/hybrid_knowledge.py) |
+| 引用、冲突与输出校验 | [src/validation.py](src/validation.py) · [src/output_format.py](src/output_format.py) |
+| 测试、评估与真实记录 | [tests/](tests/) · [docs/03-evaluation.md](docs/03-evaluation.md) · [examples/](examples/) |
+| AI 辅助范围与个人贡献 | [docs/04-ai-usage.md](docs/04-ai-usage.md) |
+
+项目使用 LangGraph 1.2.19 的 `StateGraph`、消息 reducer 和条件边承载工具循环；依赖版本见 [pyproject.toml](pyproject.toml) 与 [requirements.lock](requirements.lock)。设计借鉴 [LangChain ReAct 模板](https://github.com/langchain-ai/react-agent)的交互模式，以及 MIT 许可的 [agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies) 的父子分块与混合检索思路；业务工具、引用校验和测试为本项目实现。
