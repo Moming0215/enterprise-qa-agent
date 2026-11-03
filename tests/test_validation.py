@@ -63,3 +63,40 @@ def test_long_verified_quote_produces_short_answer_and_deduplicates_citations():
     assert "校对字幕中的人名和数字" in result["answer"]
     assert "适用对象" not in result["answer"]
     assert "99%" not in result["answer"]
+
+
+def test_related_mp4_quote_cannot_answer_4k_hdr_support():
+    text = "模拟产品支持 MP4 文件导出。本文没有规定 4K 或 HDR 导出能力。"
+    answer = {"status": "answered", "answer": "支持 4K HDR", "citations": [
+        {"doc_id": "K02", "snippet_id": "P1", "quote": "模拟产品支持 MP4 文件导出。"}]}
+    result = validate_answer(answer, {("K02", "P1"): {"text": text, "topic": "video_export"}},
+                             [], "产品支持 4K HDR 导出吗？")
+    assert result["status"] == "needs_clarification"
+    assert result["citations"] == []
+
+
+def test_explicit_document_gap_cannot_be_answered_as_supported():
+    text = "本文没有规定 4K 或 HDR 导出能力。"
+    answer = {"status": "answered", "answer": "支持 4K", "citations": [
+        {"doc_id": "K02", "snippet_id": "P1", "quote": text}]}
+    result = validate_answer(answer, {("K02", "P1"): {"text": text, "topic": "video_export"}},
+                             [], "支持 4K 导出吗？")
+    assert result["status"] == "needs_clarification"
+
+
+def test_unrelated_quote_cannot_answer_question():
+    text = "编辑器支持 MP4 文件导出。"
+    answer = {"status": "answered", "answer": "每周两天", "citations": [
+        {"doc_id": "K02", "snippet_id": "P1", "quote": text}]}
+    result = validate_answer(answer, {("K02", "P1"): {"text": text, "topic": "video_export"}},
+                             [], "员工每周远程办公几天？")
+    assert result["status"] == "needs_clarification"
+
+
+def test_gap_about_4k_does_not_block_mp4_answer():
+    text = "模拟产品支持 MP4 文件导出。本文没有规定 4K 或 HDR 导出能力。"
+    answer = {"status": "answered", "answer": "支持 MP4", "citations": [
+        {"doc_id": "K02", "snippet_id": "P1", "quote": text}]}
+    evidence = {("K02", "P1"): {"text": text, "topic": "video_export"}}
+    assert validate_answer(answer, evidence, [], "支持 MP4 导出吗？")["status"] == "answered"
+    assert validate_answer(answer, evidence, [], "支持 4K 导出吗？")["status"] == "needs_clarification"

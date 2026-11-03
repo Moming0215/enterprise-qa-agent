@@ -52,4 +52,6 @@ Mock 在较大语料下会顺序读取全部候选，可能引用无关文档；
 
 模拟资料扩充到 44 份、约 9,405 个汉字；索引报告为 104 个父片段、104 个子片段。新增 50 题，与原 20 题合计 70 题，其中 55 条有答案、15 条无答案、10 条跨文档、3 条冲突。逐题结果见 [`retrieval_metrics_extended.json`](../examples/video_tool_kb/retrieval_metrics_extended.json)。Raw Recall@3 为 0.9515，含显式文档引用扩展后的 Delivered Recall@3 为 0.9636，冲突双方召回 3/3；跨文档题完整召回 6/10。无答案题 14/15 仍返回候选，这些候选可能相关，但不足以作答，须由 Agent 保守判断。数字来自合成资料及同源标注，不是生产效果。
 
-新增格式解析与一次受限修复的离线模拟测试、长引文选句与去重测试，共 46 项自动测试通过，全套结果见 [`video_tool_kb_v2/test-results.txt`](../examples/video_tool_kb_v2/test-results.txt)。2026-11-03 在线重复试验时，DeepSeek 简单连通测试返回 HTTP 503 `service_unavailable_error`；三次问答均为 `model_error:OpenAIAPIError`，记录见 [`video_tool_kb_v2/`](../examples/video_tool_kb_v2/)。因此当前**不能声称真实模型输出稳定性已验证**，待接口恢复后需在同一组问题上重复运行并报告成功率。旧在线 Trace 只证明旧代码与旧语料的当时行为。
+新增格式解析与一次受限修复的离线模拟测试、长引文选句与去重测试，加入下述反例后共 50 项自动测试通过，全套结果见 [`video_tool_kb_v2/test-results.txt`](../examples/video_tool_kb_v2/test-results.txt)。2026-11-03 在线重复试验时，DeepSeek 简单连通测试返回 HTTP 503 `service_unavailable_error`；三次问答均为 `model_error:OpenAIAPIError`，记录见 [`video_tool_kb_v2/`](../examples/video_tool_kb_v2/)。因此当前**不能声称真实模型输出稳定性已验证**，待接口恢复后需在同一组问题上重复运行并报告成功率。旧在线 Trace 只证明旧代码与旧语料的当时行为。
+
+针对“正确引文但答非所问”的关键缺陷，又增加了 MP4 引文冒充 4K/HDR 支持、明确未规定却输出肯定答案、完全无关引用三类反例。新校验将它们降为 `needs_clarification`，同时保留“MP4 可导出”这一有直接证据的正例。测试仅覆盖已列反例；语义相似但实际不支持结论的复杂情况仍可能漏过，不能宣称零无依据回答。

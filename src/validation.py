@@ -5,6 +5,27 @@ import re
 import jieba
 
 
+GAP_MARKERS = ("没有规定", "未规定", "未给出", "未写明", "未注明", "不包含", "没有定义")
+QUESTION_STOPWORDS = {"员工", "用户", "产品", "公司", "是否", "可以", "能否", "什么", "怎么", "多少", "多久", "需要", "支持", "你们"}
+
+
+def _sufficient_for_question(citations: list[dict], question: str) -> bool:
+    if not question.strip():
+        return True
+    quotes = "\n".join(c["quote"] for c in citations)
+    technical_terms = {term.upper() for term in re.findall(r"(?i)\b(?:\d+K|HDR|HEVC|MP4|SLA)\b", question)}
+    if any(term not in quotes.upper() for term in technical_terms):
+        return False
+    terms = {term.strip().lower() for term in jieba.cut(question) if len(term.strip()) >= 2
+             and term.strip() not in QUESTION_STOPWORDS}
+    for sentence in re.split(r"[。\n]", quotes):
+        if any(marker in sentence for marker in GAP_MARKERS) and (
+            any(term in sentence.upper() for term in technical_terms) or
+            (not technical_terms and any(term in sentence.lower() for term in terms))):
+            return False
+    return not terms or bool(terms & {term.strip().lower() for term in jieba.cut(quotes)})
+
+
 def _excerpt(quote: str, question: str) -> str:
     """Select short, verbatim sentences from a verified quote."""
     sentences = [part.strip(" #；;，, ") for part in re.split(r"[。\n]+", quote)
@@ -61,6 +82,10 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict], q
     if answer["status"] == "answered":
         if not citations:
             return incomplete("answer_without_citation")
+        if not _sufficient_for_question(verified_citations, question):
+            return {"status": "needs_clarification", "answer": "现有已读取资料不足以回答该问题。",
+                    "citations": [], "gaps": ["引文未覆盖问题要点或只说明资料缺口"],
+                    "clarifying_question": "请提供直接适用的资料或确认问题范围。", "error": None}
         cited = {(c["doc_id"], c["snippet_id"]) for c in citations}
         topics = {read_evidence[key]["topic"] for key in cited}
         for topic in topics:
