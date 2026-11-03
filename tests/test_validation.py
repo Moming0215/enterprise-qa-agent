@@ -10,7 +10,7 @@ def test_valid_citation():
         "gaps": [], "clarifying_question": None, "error": None}
     result = validate_answer(answer, EVIDENCE, [])
     assert result["status"] == "answered"
-    assert result["answer"] == "员工每周最多可申请两天远程办公。"
+    assert result["answer"] == "D03：每周最多可申请两天远程办公。"
 
 
 def test_fabricated_claim_is_replaced_by_source_text():
@@ -18,7 +18,7 @@ def test_fabricated_claim_is_replaced_by_source_text():
               "citations": [{"doc_id": "D03", "snippet_id": "S1", "quote": "员工每周最多可申请两天远程办公。"}],
               "gaps": "", "clarifying_question": "", "error": ""}
     result = validate_answer(answer, EVIDENCE, [])
-    assert result["answer"] == "员工每周最多可申请两天远程办公。"
+    assert result["answer"] == "D03：员工每周最多可申请两天远程办公。"
     assert result["gaps"] == []
     assert result["clarifying_question"] is None
     assert result["error"] is None
@@ -50,3 +50,16 @@ def test_conflict_clarification_must_cite_both_read_sources():
     candidates = [{"doc_id": doc, "snippet_id": "S1", "topic": "reimbursement_deadline"}
                   for doc in ("D01", "D02")]
     assert validate_answer(answer, evidence, candidates)["error"] == "conflict_requires_both_citations"
+
+
+def test_long_verified_quote_produces_short_answer_and_deduplicates_citations():
+    source = "# 字幕流程\n适用对象：客服。\n编辑器可以生成字幕初稿。创作者需要逐句校对字幕中的人名和数字。本文不承诺识别准确率。"
+    citation = {"doc_id": "K01", "snippet_id": "P1", "quote": source}
+    result = validate_answer({"status": "answered", "answer": "准确率为99%", "citations":
+        [citation, citation], "gaps": [], "error": None},
+        {("K01", "P1"): {"text": source, "topic": "subtitle"}}, [], "字幕人名需要校对吗")
+    assert result["status"] == "answered"
+    assert len(result["citations"]) == 1
+    assert "校对字幕中的人名和数字" in result["answer"]
+    assert "适用对象" not in result["answer"]
+    assert "99%" not in result["answer"]

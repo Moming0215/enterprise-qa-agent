@@ -45,15 +45,18 @@ Copy-Item .env.example .env
 
 ## 短视频工具企业模拟知识库
 
-[`data/video_tool_kb/`](data/video_tool_kb/) 新增 14 份跨产品、内容安全、发布、客服和数据流程的合成资料，以及 20 条标注检索题。它以“小影科技（模拟）”为背景，**不代表该公司的真实产品、政策或承诺**。K13/K14 故意给出相互矛盾且未说明优先级的草稿保留期限，用于验证冲突处理。
+[`data/video_tool_kb/`](data/video_tool_kb/) 包含 44 份跨产品、内容安全、发布、客服、数据和安全流程的合成资料，以及 70 条标注检索题。它以“小影科技（模拟）”为背景，**不代表该公司的真实产品、政策或承诺**。K13/K14 故意给出相互矛盾且未说明优先级的草稿保留期限，用于验证冲突处理。
 
 ```powershell
 .\.venv\Scripts\python.exe -m src.ingest_cli --source data/video_tool_kb/sources --index data/index/video_tool_kb
 .\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --output examples/video_tool_kb/retention_conflict.json
+.\.venv\Scripts\python.exe -m src.evaluate_retrieval --dataset data/video_tool_kb/eval_all.json --index-dir data/index/video_tool_kb --output examples/private/retrieval-check.json
 .\.venv\Scripts\python.exe -m pytest tests/test_video_tool_kb.py -q
 ```
 
-实际检索指标与在线 Trace 见 [`examples/video_tool_kb/`](examples/video_tool_kb/)；首次在线字幕问答出现两次 `invalid_model_json`，失败记录也保留在目录内。该目录下的资料用途与边界详见 [`data/video_tool_kb/README.md`](data/video_tool_kb/README.md)。
+扩充后的检索指标见 [`examples/video_tool_kb/retrieval_metrics_extended.json`](examples/video_tool_kb/retrieval_metrics_extended.json)，早期在线 Trace 见 [`examples/video_tool_kb/`](examples/video_tool_kb/)；首次在线字幕问答出现两次 `invalid_model_json`，失败记录也保留在目录内。最终输出现在支持严格 JSON 与围栏 JSON，在线格式无效时最多追加一次无工具的 JSON 格式修复。接口不可用或修复失败仍返回 `incomplete`。该目录下的资料用途与边界详见 [`data/video_tool_kb/README.md`](data/video_tool_kb/README.md)。
+
+70 题评估输出中的 `hybrid` 才对应本知识库；`legacy` 固定使用旧 JSON 基线，语料不同，不作横向比较。2026-11-03 DeepSeek API 返回 503，新增格式修复尚未完成真实接口的重复成功率验证；本地模拟测试与失败 Trace 见 [`examples/video_tool_kb_v2/`](examples/video_tool_kb_v2/)。
 
 ## 评审入口
 

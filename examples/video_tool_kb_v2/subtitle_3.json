@@ -1,0 +1,18 @@
+{
+  "status": "incomplete",
+  "answer": "",
+  "citations": [],
+  "gaps": [],
+  "clarifying_question": null,
+  "error": "model_error:OpenAIAPIError",
+  "trace": [
+    {
+      "step": 1,
+      "action": "model_error",
+      "error": "OpenAIAPIError"
+    }
+  ],
+  "mode": "online",
+  "model": "deepseek-flash",
+  "executed_at_utc": "2026-11-03T10:22:47.276536+00:00"
+}

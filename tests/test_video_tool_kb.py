@@ -15,7 +15,7 @@ EXAMPLES = ROOT / "examples" / "video_tool_kb"
 
 def test_business_corpus_has_unique_ids_and_source_metadata():
     sources = sorted((KB / "sources").glob("*.md"))
-    assert len(sources) == 14
+    assert len(sources) == 44
     metadata = [json.loads(path.with_name(path.name + ".meta.json").read_text(encoding="utf-8"))
                 for path in sources]
     assert len({item["doc_id"] for item in metadata}) == len(sources)
@@ -25,18 +25,21 @@ def test_business_corpus_has_unique_ids_and_source_metadata():
 
 def test_business_corpus_retrieval_and_conflict_agent(tmp_path):
     index_dir = tmp_path / "index"
-    assert build_index(KB / "sources", index_dir)["indexed_files"] == 14
+    assert build_index(KB / "sources", index_dir)["indexed_files"] == 44
     kb = HybridKnowledgeBase(index_dir)
     try:
-        cases = json.loads((KB / "eval_queries.json").read_text(encoding="utf-8"))
+        cases = (json.loads((KB / "eval_queries.json").read_text(encoding="utf-8")) +
+                 json.loads((KB / "eval_advanced.json").read_text(encoding="utf-8")))
         scores = score_retrieval(kb, cases, limit=3)
+        linked = kb.search_documents("误删项目素材时涉及回收站天数，该引用哪几份资料？", limit=3)
     finally:
         kb.close()
-    assert scores["total_queries"] == 20
-    assert scores["raw_recall_at_3"] >= 0.9
+    assert scores["total_queries"] == 70
+    assert scores["raw_recall_at_3"] >= 0.95
     assert scores["conflict_pair_recall"] == 1.0
+    assert {"K13", "K14", "K44"}.issubset({item["doc_id"] for item in linked})
     result = run_agent({"question": "删除的云端草稿在回收站保留多久？"},
-                       mode="mock", index_dir=str(index_dir))
+                       mode="mock", index_dir=str(index_dir), max_steps=30)
     assert result["status"] == "needs_clarification"
     assert {"K13", "K14"}.issubset({citation["doc_id"] for citation in result["citations"]})
 

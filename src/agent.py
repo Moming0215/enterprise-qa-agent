@@ -12,6 +12,7 @@ from langgraph.graph.message import add_messages
 
 from .knowledge import KnowledgeBase
 from .hybrid_knowledge import HybridKnowledgeBase
+from .output_format import parse_final
 from .validation import incomplete, validate_answer
 
 
@@ -111,10 +112,13 @@ def run_agent(request: dict, mode: str = "mock", max_steps: int = 8,
     except (ValueError, OSError) as exc:
         return {**incomplete(f"knowledge_error:{exc}"), "trace": []}
     model = None
+    format_model = None
     if mode == "online":
-        model = ChatOpenAI(model=os.getenv("DEEPSEEK_MODEL", "deepseek-flash"),
+        base_model = ChatOpenAI(model=os.getenv("DEEPSEEK_MODEL", "deepseek-flash"),
                            base_url=os.getenv("DEEPSEEK_BASE_URL", "https://api.deepseek.com"),
-                           api_key=key, extra_body={"thinking": {"type": "disabled"}}).bind_tools(TOOLS)
+                           api_key=key, extra_body={"thinking": {"type": "disabled"}})
+        model = base_model.bind_tools(TOOLS)
+        format_model = base_model.bind(response_format={"type": "json_object"})
 
     user_text = json.dumps({"question": question, "history": history}, ensure_ascii=False)
 
@@ -144,11 +148,23 @@ def run_agent(request: dict, mode: str = "mock", max_steps: int = 8,
         if reply.tool_calls:
             return {"messages": [reply], "trace": state["trace"] + [event]}
         try:
-            payload = json.loads(reply.content)
+            payload = parse_final(reply.content)
         except (ValueError, TypeError):
-            payload = incomplete("invalid_model_json")
+            if mode == "online":
+                try:
+                    repair = format_model.invoke(state["messages"] + [reply, HumanMessage(content=
+                        "Your final response was not a valid JSON object. Return only one JSON object with "
+                        "status, answer, citations, gaps, clarifying_question, error. Use only snippets already read. "
+                        "Do not call tools or add unverified claims.")])
+                    payload = parse_final(repair.content)
+                    event["format_repair"] = "success"
+                except Exception as exc:
+                    payload = incomplete("invalid_model_json")
+                    event["format_repair"] = f"failed:{type(exc).__name__}"
+            else:
+                payload = incomplete("invalid_model_json")
         return {"messages": [reply], "trace": state["trace"] + [event], "done": True,
-                "final": validate_answer(payload, state["evidence"], state["candidates"])}
+                "final": validate_answer(payload, state["evidence"], state["candidates"], question)}
 
     def call_tools(state: AgentState) -> dict:
         reply = state["messages"][-1]

@@ -11,3 +11,5 @@ Trace 记录实际模型动作、工具参数、返回摘要及下一轮动作�
 新增 PDF/Markdown 路径先提取章节或页，切出可引用的父片段，再切小的检索子片段。FastEmbed 生成中文 dense 与 BM25 sparse 向量，Qdrant 本地索引分别查询，按 RRF 合并父片段候选。已标注主题的其他父片段补入候选，防止 top-k 只返回冲突的一方。`read_snippet` 返回父片段原文及文件位置；最终引用从实际读取结果补上来源、版本和范围。索引路径与 JSON 路径共用 LangGraph 决策环和引用校验器。
 
 技术取舍：LangGraph 提供清晰循环和状态结构；本地 Qdrant 便于离线演示和复现，避免引入服务部署。父子片段让检索粒度与引用上下文分开。当前同主题补查依赖侧车元数据，对无标注主题无效；RRF 和 dense 阈值仅在小型合成集上检查。原文式回答较长；程序不能理解任意文档间的语义冲突，遇到同主题不同文本时保守请求确认。设计与实现计划分别见 [`superpowers/specs/2026-11-01-hybrid-retrieval-design.md`](superpowers/specs/2026-11-01-hybrid-retrieval-design.md) 和 [`superpowers/plans/2026-11-01-hybrid-retrieval.md`](superpowers/plans/2026-11-01-hybrid-retrieval.md)。
+
+2026-11-03 改进：最终响应先严格解析 JSON（也接受完整围栏 JSON）；解析失败时，只追加一次没有工具权限的 JSON 格式修复请求，之后仍走原有引用和冲突校验，失败则 `incomplete`。最终可读回答不直接信任模型自由表述，而是从已验证引文中挑选最多两句相关原文，按文档 ID 列出并去重引用。对于已显式引用其他文档的资料，检索器扩展这些关联文档作为候选。词面选句可能遗漏复杂语义，跨文档答案仍以证据完整性为先。接口 HTTP 503 不属于格式错误，不会被伪装成成功。

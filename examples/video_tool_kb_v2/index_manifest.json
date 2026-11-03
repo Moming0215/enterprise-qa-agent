@@ -1,0 +1,8 @@
+{
+  "indexed_files": 44,
+  "parent_count": 104,
+  "child_count": 104,
+  "failures": [],
+  "dense_model": "BAAI/bge-small-zh-v1.5",
+  "sparse_model": "Qdrant/bm25"
+}

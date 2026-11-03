@@ -1,0 +1,432 @@
+[
+  {
+    "query": "自动字幕生成后还要人工校对吗？",
+    "relevant_doc_ids": [
+      "K01"
+    ]
+  },
+  {
+    "query": "字幕里的人名和数字不准怎么办？",
+    "relevant_doc_ids": [
+      "K01"
+    ]
+  },
+  {
+    "query": "编辑器能导出什么格式和画幅？",
+    "relevant_doc_ids": [
+      "K02"
+    ]
+  },
+  {
+    "query": "模板使用的音乐授权到期了还能上架吗？",
+    "relevant_doc_ids": [
+      "K03"
+    ]
+  },
+  {
+    "query": "AI 生成的脚本能保证事实正确和审核通过吗？",
+    "relevant_doc_ids": [
+      "K04"
+    ]
+  },
+  {
+    "query": "审阅者能修改团队项目草稿吗？",
+    "relevant_doc_ids": [
+      "K05"
+    ]
+  },
+  {
+    "query": "移动端灰度前要通过哪些发布门禁？",
+    "relevant_doc_ids": [
+      "K06"
+    ]
+  },
+  {
+    "query": "官方示例视频发现疑似侵权应如何审核？",
+    "relevant_doc_ids": [
+      "K07"
+    ]
+  },
+  {
+    "query": "收到版权投诉后客服要记录什么？",
+    "relevant_doc_ids": [
+      "K08"
+    ]
+  },
+  {
+    "query": "用户要求删除云端项目时怎么处理？",
+    "relevant_doc_ids": [
+      "K09"
+    ]
+  },
+  {
+    "query": "云端导出故障影响灰度版本时如何响应？",
+    "relevant_doc_ids": [
+      "K10"
+    ]
+  },
+  {
+    "query": "应用商店购买的订阅如何咨询退款？",
+    "relevant_doc_ids": [
+      "K11"
+    ]
+  },
+  {
+    "query": "技术工单升级研发需要哪些信息？",
+    "relevant_doc_ids": [
+      "K12"
+    ]
+  },
+  {
+    "query": "删除的云端草稿在回收站保留多久？",
+    "relevant_doc_ids": [
+      "K13",
+      "K14"
+    ],
+    "conflict": true
+  },
+  {
+    "query": "误删草稿后还有几天可以恢复？",
+    "relevant_doc_ids": [
+      "K13",
+      "K14"
+    ],
+    "conflict": true
+  },
+  {
+    "query": "我们支持 4K HDR 导出吗？",
+    "relevant_doc_ids": []
+  },
+  {
+    "query": "现在会员套餐多少钱？",
+    "relevant_doc_ids": []
+  },
+  {
+    "query": "客服首响 SLA 是几小时？",
+    "relevant_doc_ids": []
+  },
+  {
+    "query": "员工食堂几点开门？",
+    "relevant_doc_ids": []
+  },
+  {
+    "query": "小影科技现任 CEO 是谁？",
+    "relevant_doc_ids": []
+  },
+  {
+    "query": "历史素材没有授权范围，能直接放进模板吗？",
+    "relevant_doc_ids": [
+      "K15"
+    ]
+  },
+  {
+    "query": "原语言字幕改了，多语言版本还可以直接上线吗？",
+    "relevant_doc_ids": [
+      "K16"
+    ]
+  },
+  {
+    "query": "官方示例视频声音忽大忽小时怎么定位？",
+    "relevant_doc_ids": [
+      "K17"
+    ]
+  },
+  {
+    "query": "合作方想替换品牌水印，谁批准？",
+    "relevant_doc_ids": [
+      "K18"
+    ]
+  },
+  {
+    "query": "本地草稿没同步就卸载应用可以吗？",
+    "relevant_doc_ids": [
+      "K19"
+    ]
+  },
+  {
+    "query": "云端导出队列积压时能承诺完成分钟数吗？",
+    "relevant_doc_ids": [
+      "K20"
+    ]
+  },
+  {
+    "query": "崩溃日志里有手机号应如何处理？",
+    "relevant_doc_ids": [
+      "K21"
+    ]
+  },
+  {
+    "query": "收到冒用举报后客服可以直接承诺封号吗？",
+    "relevant_doc_ids": [
+      "K22"
+    ]
+  },
+  {
+    "query": "只允许内部设计使用的字体可以打包进模板吗？",
+    "relevant_doc_ids": [
+      "K23"
+    ]
+  },
+  {
+    "query": "退出灰度后账号还会继续分配新功能吗？",
+    "relevant_doc_ids": [
+      "K24"
+    ]
+  },
+  {
+    "query": "版本回滚前要保存哪些证据？",
+    "relevant_doc_ids": [
+      "K25"
+    ]
+  },
+  {
+    "query": "导出主链路功能开关改动需要谁确认？",
+    "relevant_doc_ids": [
+      "K26"
+    ]
+  },
+  {
+    "query": "事故等级由客服还是事故指挥官确定？",
+    "relevant_doc_ids": [
+      "K27"
+    ]
+  },
+  {
+    "query": "帮助中心旧界面文章在产品更新后怎么处理？",
+    "relevant_doc_ids": [
+      "K28"
+    ]
+  },
+  {
+    "query": "电子发票申请需要核对哪些订单信息？",
+    "relevant_doc_ids": [
+      "K29"
+    ]
+  },
+  {
+    "query": "已付款但没获得订阅权益，能让用户再买一次吗？",
+    "relevant_doc_ids": [
+      "K30"
+    ]
+  },
+  {
+    "query": "应用商店拒审后修复包还要回归吗？",
+    "relevant_doc_ids": [
+      "K31"
+    ]
+  },
+  {
+    "query": "创作者活动未经授权的音乐替换怎么处理？",
+    "relevant_doc_ids": [
+      "K32"
+    ]
+  },
+  {
+    "query": "销售可以直接承诺企业客户私有部署上线日期吗？",
+    "relevant_doc_ids": [
+      "K33"
+    ]
+  },
+  {
+    "query": "操作日志导出给外部需要怎样脱敏？",
+    "relevant_doc_ids": [
+      "K34"
+    ]
+  },
+  {
+    "query": "团队权限多久复核一次，离职人员怎么处理？",
+    "relevant_doc_ids": [
+      "K35"
+    ]
+  },
+  {
+    "query": "客服把含手机号的日志发到公开群可以吗？",
+    "relevant_doc_ids": [
+      "K36"
+    ]
+  },
+  {
+    "query": "用户要导出云端项目数据时先核验什么？",
+    "relevant_doc_ids": [
+      "K37"
+    ]
+  },
+  {
+    "query": "合作方回调重复事件怎样去重？",
+    "relevant_doc_ids": [
+      "K38"
+    ]
+  },
+  {
+    "query": "市场文案要写AI效率提升百分比需要什么证据？",
+    "relevant_doc_ids": [
+      "K39"
+    ]
+  },
+  {
+    "query": "字幕模型新版本专有名词错误变多怎么办？",
+    "relevant_doc_ids": [
+      "K40"
+    ]
+  },
+  {
+    "query": "同时涉及退款版权隐私的投诉由谁汇总？",
+    "relevant_doc_ids": [
+      "K41"
+    ]
+  },
+  {
+    "query": "实验转化率为什么不能只看一个百分比？",
+    "relevant_doc_ids": [
+      "K42"
+    ]
+  },
+  {
+    "query": "漏洞报告能在公开渠道展示复现细节吗？",
+    "relevant_doc_ids": [
+      "K43"
+    ]
+  },
+  {
+    "query": "团队项目误删素材恢复前需要保留什么？",
+    "relevant_doc_ids": [
+      "K44"
+    ]
+  },
+  {
+    "query": "灰度导出故障需要暂停扩量并回滚时，分别谁负责？",
+    "relevant_doc_ids": [
+      "K06",
+      "K10",
+      "K25"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "模板里的字体授权到期并收到版权投诉，分别走什么流程？",
+    "relevant_doc_ids": [
+      "K03",
+      "K08",
+      "K23"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "AI字幕模型错误影响市场宣传，模型与文案谁处理？",
+    "relevant_doc_ids": [
+      "K01",
+      "K39",
+      "K40"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "用户请求删除云端项目，但客服工单附件里有个人信息，如何分工？",
+    "relevant_doc_ids": [
+      "K09",
+      "K36"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "应用商店购买后权益没到账又要退款，先核对什么？",
+    "relevant_doc_ids": [
+      "K11",
+      "K30"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "用户退出灰度，发布经理还能继续扩大该用户流量吗？",
+    "relevant_doc_ids": [
+      "K24",
+      "K06"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "企业客户要求私有部署并导出用户数据，哪些团队确认？",
+    "relevant_doc_ids": [
+      "K33",
+      "K37"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "误删项目素材时涉及回收站天数，该引用哪几份资料？",
+    "relevant_doc_ids": [
+      "K44",
+      "K13",
+      "K14"
+    ],
+    "case_type": "multi_document",
+    "conflict": true
+  },
+  {
+    "query": "导出失败工单要哪些日志，日志如何脱敏？",
+    "relevant_doc_ids": [
+      "K12",
+      "K21",
+      "K36"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "实验效果想写进AI功能宣传，数据与品牌需要做什么？",
+    "relevant_doc_ids": [
+      "K42",
+      "K39"
+    ],
+    "case_type": "multi_document"
+  },
+  {
+    "query": "当前套餐的精确人民币价格是多少？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "云端项目数据导出法定必须几小时完成？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "操作日志具体保留多少天？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "小影科技真实员工人数和 CEO 是谁？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "哪个国家的隐私法律允许永久保存草稿？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "应用商店审核一定会在24小时通过吗？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "字幕识别准确率具体是百分之几？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "回调接口能保证恰好执行一次吗？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "企业私有部署的合同价格和交付日期是什么？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  },
+  {
+    "query": "安全漏洞报告人的奖金是多少钱？",
+    "relevant_doc_ids": [],
+    "case_type": "no_answer"
+  }
+]

@@ -53,7 +53,9 @@ def main() -> int:
         hybrid.close()
     content = json.dumps(result, ensure_ascii=False, indent=2)
     if args.output:
-        Path(args.output).write_text(content + "\n", encoding="utf-8")
+        target = Path(args.output)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(content + "\n", encoding="utf-8")
     print(content)
     return 0
 

@@ -5,6 +5,7 @@ parent-child and dense+sparse retrieval pattern. This code is an adaptation.
 """
 
 import json
+import re
 import uuid
 from functools import lru_cache
 from pathlib import Path
@@ -135,6 +136,12 @@ class HybridKnowledgeBase:
         topics = {self.parents[key]["topic"] for key in keys if self.parents[key]["topic"] != "unknown"}
         for key, parent in self.parents.items():
             if parent["topic"] in topics and key not in keys:
+                keys.append(key)
+        # Follow explicit document references in retrieved policies (for example K44 -> K13/K14).
+        referenced_ids = {doc_id for key in keys
+                          for doc_id in re.findall(r"\bK\d{2}\b", self.parents[key]["text"])}
+        for key in self.parents:
+            if key[0] in referenced_ids and key not in keys:
                 keys.append(key)
         return [{**{field: parent[field] for field in (
             "doc_id", "snippet_id", "topic", "version_date", "scope", "source_file", "source_location")}

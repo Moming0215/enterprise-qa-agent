@@ -1,0 +1,1156 @@
+{
+  "total_queries": 70,
+  "positive_queries": 55,
+  "negative_queries": 15,
+  "conflict_queries": 3,
+  "raw_recall_at_3": 0.9515,
+  "delivered_recall_at_3": 0.9636,
+  "negative_candidate_rate": 0.9333,
+  "conflict_pair_recall": 1.0,
+  "details": [
+    {
+      "query": "自动字幕生成后还要人工校对吗？",
+      "expected": [
+        "K01"
+      ],
+      "raw": [
+        "K01",
+        "K04",
+        "K16"
+      ],
+      "delivered": [
+        "K01",
+        "K04",
+        "K16"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "字幕里的人名和数字不准怎么办？",
+      "expected": [
+        "K01"
+      ],
+      "raw": [
+        "K01",
+        "K02",
+        "K04"
+      ],
+      "delivered": [
+        "K01",
+        "K02",
+        "K04"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "编辑器能导出什么格式和画幅？",
+      "expected": [
+        "K02"
+      ],
+      "raw": [
+        "K01",
+        "K02",
+        "K33"
+      ],
+      "delivered": [
+        "K01",
+        "K02",
+        "K33"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "模板使用的音乐授权到期了还能上架吗？",
+      "expected": [
+        "K03"
+      ],
+      "raw": [
+        "K03",
+        "K23",
+        "K32"
+      ],
+      "delivered": [
+        "K03",
+        "K23",
+        "K32"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "AI 生成的脚本能保证事实正确和审核通过吗？",
+      "expected": [
+        "K04"
+      ],
+      "raw": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "delivered": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "审阅者能修改团队项目草稿吗？",
+      "expected": [
+        "K05"
+      ],
+      "raw": [
+        "K05",
+        "K44"
+      ],
+      "delivered": [
+        "K05",
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "expanded": [
+        "K13",
+        "K14"
+      ]
+    },
+    {
+      "query": "移动端灰度前要通过哪些发布门禁？",
+      "expected": [
+        "K06"
+      ],
+      "raw": [
+        "K06",
+        "K10",
+        "K31"
+      ],
+      "delivered": [
+        "K06",
+        "K10",
+        "K31"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "官方示例视频发现疑似侵权应如何审核？",
+      "expected": [
+        "K07"
+      ],
+      "raw": [
+        "K07",
+        "K08",
+        "K17"
+      ],
+      "delivered": [
+        "K07",
+        "K08",
+        "K17"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "收到版权投诉后客服要记录什么？",
+      "expected": [
+        "K08"
+      ],
+      "raw": [
+        "K08",
+        "K20",
+        "K22"
+      ],
+      "delivered": [
+        "K08",
+        "K20",
+        "K22"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "用户要求删除云端项目时怎么处理？",
+      "expected": [
+        "K09"
+      ],
+      "raw": [
+        "K09",
+        "K37",
+        "K44"
+      ],
+      "delivered": [
+        "K09",
+        "K13",
+        "K14",
+        "K37",
+        "K44"
+      ],
+      "expanded": [
+        "K13",
+        "K14"
+      ]
+    },
+    {
+      "query": "云端导出故障影响灰度版本时如何响应？",
+      "expected": [
+        "K10"
+      ],
+      "raw": [
+        "K06",
+        "K10",
+        "K27"
+      ],
+      "delivered": [
+        "K06",
+        "K10",
+        "K27"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "应用商店购买的订阅如何咨询退款？",
+      "expected": [
+        "K11"
+      ],
+      "raw": [
+        "K11",
+        "K30",
+        "K41"
+      ],
+      "delivered": [
+        "K11",
+        "K30",
+        "K41"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "技术工单升级研发需要哪些信息？",
+      "expected": [
+        "K12"
+      ],
+      "raw": [
+        "K12",
+        "K22",
+        "K25"
+      ],
+      "delivered": [
+        "K12",
+        "K22",
+        "K25"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "删除的云端草稿在回收站保留多久？",
+      "expected": [
+        "K13",
+        "K14"
+      ],
+      "raw": [
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "误删草稿后还有几天可以恢复？",
+      "expected": [
+        "K13",
+        "K14"
+      ],
+      "raw": [
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "我们支持 4K HDR 导出吗？",
+      "expected": [],
+      "raw": [
+        "K02",
+        "K12",
+        "K33"
+      ],
+      "delivered": [
+        "K02",
+        "K12",
+        "K33"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "现在会员套餐多少钱？",
+      "expected": [],
+      "raw": [
+        "K13",
+        "K14",
+        "K18"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K18"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "客服首响 SLA 是几小时？",
+      "expected": [],
+      "raw": [
+        "K10",
+        "K12",
+        "K17"
+      ],
+      "delivered": [
+        "K10",
+        "K12",
+        "K17"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "员工食堂几点开门？",
+      "expected": [],
+      "raw": [],
+      "delivered": [],
+      "expanded": []
+    },
+    {
+      "query": "小影科技现任 CEO 是谁？",
+      "expected": [],
+      "raw": [
+        "K17"
+      ],
+      "delivered": [
+        "K17"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "历史素材没有授权范围，能直接放进模板吗？",
+      "expected": [
+        "K15"
+      ],
+      "raw": [
+        "K03",
+        "K08",
+        "K15"
+      ],
+      "delivered": [
+        "K03",
+        "K08",
+        "K15"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "原语言字幕改了，多语言版本还可以直接上线吗？",
+      "expected": [
+        "K16"
+      ],
+      "raw": [
+        "K16",
+        "K40"
+      ],
+      "delivered": [
+        "K16",
+        "K40"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "官方示例视频声音忽大忽小时怎么定位？",
+      "expected": [
+        "K17"
+      ],
+      "raw": [
+        "K02",
+        "K07",
+        "K17"
+      ],
+      "delivered": [
+        "K02",
+        "K07",
+        "K17"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "合作方想替换品牌水印，谁批准？",
+      "expected": [
+        "K18"
+      ],
+      "raw": [
+        "K18",
+        "K42"
+      ],
+      "delivered": [
+        "K18",
+        "K42"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "本地草稿没同步就卸载应用可以吗？",
+      "expected": [
+        "K19"
+      ],
+      "raw": [
+        "K14",
+        "K19"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K19"
+      ],
+      "expanded": [
+        "K13"
+      ]
+    },
+    {
+      "query": "云端导出队列积压时能承诺完成分钟数吗？",
+      "expected": [
+        "K20"
+      ],
+      "raw": [
+        "K10",
+        "K20"
+      ],
+      "delivered": [
+        "K10",
+        "K20"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "崩溃日志里有手机号应如何处理？",
+      "expected": [
+        "K21"
+      ],
+      "raw": [
+        "K21",
+        "K34"
+      ],
+      "delivered": [
+        "K21",
+        "K34"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "收到冒用举报后客服可以直接承诺封号吗？",
+      "expected": [
+        "K22"
+      ],
+      "raw": [
+        "K08",
+        "K22",
+        "K30"
+      ],
+      "delivered": [
+        "K08",
+        "K22",
+        "K30"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "只允许内部设计使用的字体可以打包进模板吗？",
+      "expected": [
+        "K23"
+      ],
+      "raw": [
+        "K03",
+        "K15",
+        "K23"
+      ],
+      "delivered": [
+        "K03",
+        "K15",
+        "K23"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "退出灰度后账号还会继续分配新功能吗？",
+      "expected": [
+        "K24"
+      ],
+      "raw": [
+        "K24",
+        "K28"
+      ],
+      "delivered": [
+        "K24",
+        "K28"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "版本回滚前要保存哪些证据？",
+      "expected": [
+        "K25"
+      ],
+      "raw": [
+        "K06",
+        "K25"
+      ],
+      "delivered": [
+        "K06",
+        "K25"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "导出主链路功能开关改动需要谁确认？",
+      "expected": [
+        "K26"
+      ],
+      "raw": [
+        "K06",
+        "K25",
+        "K26"
+      ],
+      "delivered": [
+        "K06",
+        "K25",
+        "K26"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "事故等级由客服还是事故指挥官确定？",
+      "expected": [
+        "K27"
+      ],
+      "raw": [
+        "K10",
+        "K27"
+      ],
+      "delivered": [
+        "K10",
+        "K27"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "帮助中心旧界面文章在产品更新后怎么处理？",
+      "expected": [
+        "K28"
+      ],
+      "raw": [
+        "K08",
+        "K28",
+        "K31"
+      ],
+      "delivered": [
+        "K08",
+        "K28",
+        "K31"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "电子发票申请需要核对哪些订单信息？",
+      "expected": [
+        "K29"
+      ],
+      "raw": [
+        "K11",
+        "K29"
+      ],
+      "delivered": [
+        "K11",
+        "K29"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "已付款但没获得订阅权益，能让用户再买一次吗？",
+      "expected": [
+        "K30"
+      ],
+      "raw": [
+        "K11",
+        "K12",
+        "K30"
+      ],
+      "delivered": [
+        "K11",
+        "K12",
+        "K30"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "应用商店拒审后修复包还要回归吗？",
+      "expected": [
+        "K31"
+      ],
+      "raw": [
+        "K25",
+        "K30",
+        "K31"
+      ],
+      "delivered": [
+        "K25",
+        "K30",
+        "K31"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "创作者活动未经授权的音乐替换怎么处理？",
+      "expected": [
+        "K32"
+      ],
+      "raw": [
+        "K18",
+        "K23",
+        "K32"
+      ],
+      "delivered": [
+        "K18",
+        "K23",
+        "K32"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "销售可以直接承诺企业客户私有部署上线日期吗？",
+      "expected": [
+        "K33"
+      ],
+      "raw": [
+        "K31",
+        "K33"
+      ],
+      "delivered": [
+        "K31",
+        "K33"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "操作日志导出给外部需要怎样脱敏？",
+      "expected": [
+        "K34"
+      ],
+      "raw": [
+        "K02",
+        "K21",
+        "K34"
+      ],
+      "delivered": [
+        "K02",
+        "K21",
+        "K34"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "团队权限多久复核一次，离职人员怎么处理？",
+      "expected": [
+        "K35"
+      ],
+      "raw": [
+        "K35",
+        "K41"
+      ],
+      "delivered": [
+        "K35",
+        "K41"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "客服把含手机号的日志发到公开群可以吗？",
+      "expected": [
+        "K36"
+      ],
+      "raw": [
+        "K21",
+        "K36"
+      ],
+      "delivered": [
+        "K09",
+        "K21",
+        "K36"
+      ],
+      "expanded": [
+        "K09"
+      ]
+    },
+    {
+      "query": "用户要导出云端项目数据时先核验什么？",
+      "expected": [
+        "K37"
+      ],
+      "raw": [
+        "K17",
+        "K37"
+      ],
+      "delivered": [
+        "K17",
+        "K37"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "合作方回调重复事件怎样去重？",
+      "expected": [
+        "K38"
+      ],
+      "raw": [
+        "K21",
+        "K38"
+      ],
+      "delivered": [
+        "K21",
+        "K38"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "市场文案要写AI效率提升百分比需要什么证据？",
+      "expected": [
+        "K39"
+      ],
+      "raw": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "delivered": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "字幕模型新版本专有名词错误变多怎么办？",
+      "expected": [
+        "K40"
+      ],
+      "raw": [
+        "K01",
+        "K16",
+        "K40"
+      ],
+      "delivered": [
+        "K01",
+        "K16",
+        "K40"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "同时涉及退款版权隐私的投诉由谁汇总？",
+      "expected": [
+        "K41"
+      ],
+      "raw": [
+        "K04",
+        "K08",
+        "K41"
+      ],
+      "delivered": [
+        "K04",
+        "K08",
+        "K41"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "实验转化率为什么不能只看一个百分比？",
+      "expected": [
+        "K42"
+      ],
+      "raw": [
+        "K24",
+        "K39",
+        "K42"
+      ],
+      "delivered": [
+        "K24",
+        "K39",
+        "K42"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "漏洞报告能在公开渠道展示复现细节吗？",
+      "expected": [
+        "K43"
+      ],
+      "raw": [
+        "K22",
+        "K43"
+      ],
+      "delivered": [
+        "K22",
+        "K43"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "团队项目误删素材恢复前需要保留什么？",
+      "expected": [
+        "K44"
+      ],
+      "raw": [
+        "K15",
+        "K44"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K15",
+        "K44"
+      ],
+      "expanded": [
+        "K13",
+        "K14"
+      ]
+    },
+    {
+      "query": "灰度导出故障需要暂停扩量并回滚时，分别谁负责？",
+      "expected": [
+        "K06",
+        "K10",
+        "K25"
+      ],
+      "raw": [
+        "K06",
+        "K10",
+        "K24"
+      ],
+      "delivered": [
+        "K06",
+        "K10",
+        "K24"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "模板里的字体授权到期并收到版权投诉，分别走什么流程？",
+      "expected": [
+        "K03",
+        "K08",
+        "K23"
+      ],
+      "raw": [
+        "K03",
+        "K08",
+        "K23"
+      ],
+      "delivered": [
+        "K03",
+        "K08",
+        "K23"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "AI字幕模型错误影响市场宣传，模型与文案谁处理？",
+      "expected": [
+        "K01",
+        "K39",
+        "K40"
+      ],
+      "raw": [
+        "K01",
+        "K39",
+        "K40"
+      ],
+      "delivered": [
+        "K01",
+        "K39",
+        "K40"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "用户请求删除云端项目，但客服工单附件里有个人信息，如何分工？",
+      "expected": [
+        "K09",
+        "K36"
+      ],
+      "raw": [
+        "K09",
+        "K36",
+        "K37"
+      ],
+      "delivered": [
+        "K09",
+        "K36",
+        "K37"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "应用商店购买后权益没到账又要退款，先核对什么？",
+      "expected": [
+        "K11",
+        "K30"
+      ],
+      "raw": [
+        "K11",
+        "K30",
+        "K31"
+      ],
+      "delivered": [
+        "K11",
+        "K30",
+        "K31"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "用户退出灰度，发布经理还能继续扩大该用户流量吗？",
+      "expected": [
+        "K06",
+        "K24"
+      ],
+      "raw": [
+        "K06",
+        "K24"
+      ],
+      "delivered": [
+        "K06",
+        "K24"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "企业客户要求私有部署并导出用户数据，哪些团队确认？",
+      "expected": [
+        "K33",
+        "K37"
+      ],
+      "raw": [
+        "K09",
+        "K37"
+      ],
+      "delivered": [
+        "K09",
+        "K37"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "误删项目素材时涉及回收站天数，该引用哪几份资料？",
+      "expected": [
+        "K13",
+        "K14",
+        "K44"
+      ],
+      "raw": [
+        "K09",
+        "K15",
+        "K44"
+      ],
+      "delivered": [
+        "K09",
+        "K13",
+        "K14",
+        "K15",
+        "K44"
+      ],
+      "expanded": [
+        "K13",
+        "K14"
+      ]
+    },
+    {
+      "query": "导出失败工单要哪些日志，日志如何脱敏？",
+      "expected": [
+        "K12",
+        "K21",
+        "K36"
+      ],
+      "raw": [
+        "K21",
+        "K34"
+      ],
+      "delivered": [
+        "K21",
+        "K34"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "实验效果想写进AI功能宣传，数据与品牌需要做什么？",
+      "expected": [
+        "K39",
+        "K42"
+      ],
+      "raw": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "delivered": [
+        "K04",
+        "K07",
+        "K39"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "当前套餐的精确人民币价格是多少？",
+      "expected": [],
+      "raw": [
+        "K11",
+        "K13",
+        "K18"
+      ],
+      "delivered": [
+        "K11",
+        "K13",
+        "K14",
+        "K18"
+      ],
+      "expanded": [
+        "K14"
+      ]
+    },
+    {
+      "query": "云端项目数据导出法定必须几小时完成？",
+      "expected": [],
+      "raw": [
+        "K20",
+        "K37"
+      ],
+      "delivered": [
+        "K20",
+        "K37"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "操作日志具体保留多少天？",
+      "expected": [],
+      "raw": [
+        "K21",
+        "K34"
+      ],
+      "delivered": [
+        "K21",
+        "K34"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "小影科技真实员工人数和 CEO 是谁？",
+      "expected": [],
+      "raw": [
+        "K17",
+        "K18",
+        "K20"
+      ],
+      "delivered": [
+        "K17",
+        "K18",
+        "K20"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "哪个国家的隐私法律允许永久保存草稿？",
+      "expected": [],
+      "raw": [
+        "K13",
+        "K14",
+        "K41"
+      ],
+      "delivered": [
+        "K13",
+        "K14",
+        "K41"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "应用商店审核一定会在24小时通过吗？",
+      "expected": [],
+      "raw": [
+        "K29",
+        "K31"
+      ],
+      "delivered": [
+        "K29",
+        "K31"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "字幕识别准确率具体是百分之几？",
+      "expected": [],
+      "raw": [
+        "K01",
+        "K39",
+        "K40"
+      ],
+      "delivered": [
+        "K01",
+        "K39",
+        "K40"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "回调接口能保证恰好执行一次吗？",
+      "expected": [],
+      "raw": [
+        "K25",
+        "K38"
+      ],
+      "delivered": [
+        "K25",
+        "K38"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "企业私有部署的合同价格和交付日期是什么？",
+      "expected": [],
+      "raw": [
+        "K11",
+        "K33",
+        "K37"
+      ],
+      "delivered": [
+        "K11",
+        "K33",
+        "K37"
+      ],
+      "expanded": []
+    },
+    {
+      "query": "安全漏洞报告人的奖金是多少钱？",
+      "expected": [],
+      "raw": [
+        "K01",
+        "K43"
+      ],
+      "delivered": [
+        "K01",
+        "K43"
+      ],
+      "expanded": []
+    }
+  ]
+}
