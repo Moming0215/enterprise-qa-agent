@@ -1,12 +1,12 @@
-# 🔎 有证据的企业知识问答 Agent
+# 企业知识问答 Agent
 
-> **题号 3 · 企业知识问答 Agent**｜让员工找到答案，也看得见答案从哪里来。
+> 小影科技校招笔试 · 题号 3 · CLI 项目
 
-员工问“云端草稿能保留多久？”时，系统不会因为某份文档排在搜索结果第一位就回答“30 天”。它会继续读取另一份写着“15 天”的资料，列出两份原文和版本，并请用户确认适用制度。这是本项目的核心：**检索是找线索，读原文是取证，回答要过校验。**
+员工问“云端草稿能保留多久？”时，系统会检索并读取相关制度。若两份资料分别写着 30 天和 15 天，且没有说明适用范围或优先级，结果就列出双方原文并请求确认，而不是替用户选一个期限。
 
 本仓库是可运行的 CLI 项目，提供 DeepSeek 在线模型与离线 Mock 两条入口。所有制度、产品能力和案例均为**合成资料**，不代表真实小影科技的政策或产品承诺。
 
-## ✨ 一眼看懂
+## 工作流程
 
 ![从企业资料到可信答案：建库、Agent 取证与三种输出状态](docs/assets/architecture.png)
 
@@ -21,7 +21,7 @@
 | **可审阅 Trace** | 记录动作、工具参数、返回摘要、后续动作和简要依据，不暴露模型内部思维。 |
 | **故障边界** | 工具错误、调用超限、无效模型输出和接口故障返回明确状态；无效 JSON 最多尝试一次格式修复。 |
 
-## 🧭 三个值得亲自看的例子
+## 运行记录
 
 | 场景 | 观察结果 | 输入与真实模型记录 |
 |---|---|---|
@@ -31,7 +31,7 @@
 
 另外保存了[一次读取失败后补查的 Trace](examples/video_tool_kb/read_failure.json)和[两次无效 JSON 的失败记录](examples/video_tool_kb/subtitle_first_attempt.json)。这些在线记录来自较早版本；最新格式修复与问答相关性拦截已通过离线测试，**2026-11-03 DeepSeek 接口返回 HTTP 503，尚未完成新版本的在线重复成功率验证**。
 
-## 🚀 快速跑起来
+## 运行项目
 
 环境：Python 3.11+、PowerShell。首次安装：
 
@@ -70,7 +70,7 @@ Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策
 
 CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answered`、`needs_clarification`、`incomplete`）、`answer`、`citations`、`gaps`、`clarifying_question`、`error`、`trace`。`incomplete` 的退出码为 2。自定义问题参照[输入格式](examples/video_tool_kb/inputs/subtitle.json)，可加入 `history` 数组；CLI 参数见 `python -m src.cli --help`。
 
-## 📚 资料、效果与边界
+## 资料与验证
 
 [短视频工具模拟知识库](data/video_tool_kb/README.md)有 **44 份 Markdown、约 9,405 个汉字**，覆盖产品、授权、发布、客服、数据与安全流程；索引生成 104 个父片段和 104 个子片段。K13/K14 是故意保留的冲突资料。解析器也支持**可提取文字的 PDF**，有相应[测试](tests/test_hybrid_knowledge.py)。原始 JSON 小语料仍可通过 `--corpus` 使用，作为简化对照。
 
@@ -84,7 +84,7 @@ CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answe
 
 输出中的 `hybrid` 对应本知识库；`legacy` 使用另一套 JSON 小语料，不应直接比较。当前没有扫描 PDF OCR、DOCX/表格解析、文档权限控制、增量索引或通用语义蕴含证明；同主题冲突扩展依赖元数据。详见[评估记录](docs/03-evaluation.md)与[企业文档扩展设计](docs/06-enterprise-rag-extension.md)。
 
-## 🧩 从哪里看代码
+## 代码导览
 
 | 想了解 | 入口 |
 |---|---|
@@ -96,3 +96,5 @@ CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answe
 | AI 辅助范围与个人贡献 | [docs/04-ai-usage.md](docs/04-ai-usage.md) |
 
 项目使用 LangGraph 1.2.19 的 `StateGraph`、消息 reducer 和条件边承载工具循环；依赖版本见 [pyproject.toml](pyproject.toml) 与 [requirements.lock](requirements.lock)。设计借鉴 [LangChain ReAct 模板](https://github.com/langchain-ai/react-agent)的交互模式，以及 MIT 许可的 [agentic-rag-for-dummies](https://github.com/GiovanniPasq/agentic-rag-for-dummies) 的父子分块与混合检索思路；业务工具、引用校验和测试为本项目实现。
+
+流程图视觉审查参考 [Unslop by Damir Sokolovsky](https://github.com/heydamir/unslop)（CC BY 4.0）；图中的业务资料与结构由本项目实现。

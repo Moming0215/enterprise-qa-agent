@@ -15,7 +15,7 @@ CHROME = Path(r"C:\Program Files\Google\Chrome\Application\chrome.exe")
 def main() -> None:
     parser = argparse.ArgumentParser(description="Render the architecture HTML with local Chrome")
     parser.add_argument("--width", type=int, default=1480)
-    parser.add_argument("--height", type=int, default=1060)
+    parser.add_argument("--height", type=int, default=1240)
     parser.add_argument("--output", type=Path, default=OUTPUT)
     args = parser.parse_args()
     target = args.output.resolve()
