@@ -1,0 +1,278 @@
+{
+  "status": "answered",
+  "answer": "K01：创作者需要逐句检查人名、数字与专有名词；字幕初稿不应被描述为无需校对的准确转写。\nK16：多语言字幕上线前由双语审校员核对人名、地名、货币单位和文化敏感表达。机器翻译只作为初稿；源语言字幕变更后，相关语言版本标为待复核。\nK04：涉及产品参数、价格、法规或人物事实时，发布前须由内容负责人核对独立来源。",
+  "citations": [
+    {
+      "doc_id": "K01",
+      "snippet_id": "P0001",
+      "quote": "创作者需要逐句检查人名、数字与专有名词；字幕初稿不应被描述为无需校对的准确转写。",
+      "source_file": "K01-subtitles.md",
+      "source_location": "section:K01 自动字幕工作流（模拟）",
+      "version_date": "2026-09-01",
+      "scope": "模拟编辑器产品与客服"
+    },
+    {
+      "doc_id": "K16",
+      "snippet_id": "P0002",
+      "quote": "多语言字幕上线前由双语审校员核对人名、地名、货币单位和文化敏感表达。机器翻译只作为初稿；源语言字幕变更后，相关语言版本标为待复核。",
+      "source_file": "K16-subtitle_localization.md",
+      "source_location": "section:处理规则",
+      "version_date": "2026-09-17",
+      "scope": "短视频工具业务模拟"
+    },
+    {
+      "doc_id": "K04",
+      "snippet_id": "P0001",
+      "quote": "涉及产品参数、价格、法规或人物事实时，发布前须由内容负责人核对独立来源。",
+      "source_file": "K04-ai-assist.md",
+      "source_location": "section:K04 AI 辅助创作说明（模拟）",
+      "version_date": "2026-09-03",
+      "scope": "模拟产品、运营与客服"
+    }
+  ],
+  "gaps": [],
+  "clarifying_question": null,
+  "error": null,
+  "trace": [
+    {
+      "step": 1,
+      "action": [
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "自动字幕生成 人工校对"
+          }
+        },
+        {
+          "tool": "search_documents",
+          "parameters": {
+            "query": "字幕 校对 审核 流程"
+          }
+        }
+      ],
+      "previous_observations": [],
+      "decision_basis": "用户提出问题，尚无工具观察"
+    },
+    {
+      "step": 1,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "自动字幕生成 人工校对"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 8,
+        "ids": [
+          "K01/P0001",
+          "K16/P0002",
+          "K04/P0001",
+          "K40/P0002",
+          "K16/P0001",
+          "K16/P0003",
+          "K40/P0001",
+          "K40/P0003"
+        ]
+      }
+    },
+    {
+      "step": 2,
+      "tool": "search_documents",
+      "parameters": {
+        "query": "字幕 校对 审核 流程"
+      },
+      "result": {
+        "ok": true,
+        "hit_count": 7,
+        "ids": [
+          "K01/P0001",
+          "K16/P0002",
+          "K04/P0001",
+          "K07/P0001",
+          "K03/P0001",
+          "K16/P0001",
+          "K16/P0003"
+        ]
+      }
+    },
+    {
+      "step": 3,
+      "action": [
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K01",
+            "snippet_id": "P0001"
+          }
+        },
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K16",
+            "snippet_id": "P0001"
+          }
+        },
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K16",
+            "snippet_id": "P0002"
+          }
+        },
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K16",
+            "snippet_id": "P0003"
+          }
+        },
+        {
+          "tool": "read_snippet",
+          "parameters": {
+            "doc_id": "K04",
+            "snippet_id": "P0001"
+          }
+        }
+      ],
+      "previous_observations": [
+        {
+          "ok": true,
+          "hit_count": 8,
+          "ids": [
+            "K01/P0001",
+            "K16/P0002",
+            "K04/P0001",
+            "K40/P0002",
+            "K16/P0001",
+            "K16/P0003",
+            "K40/P0001",
+            "K40/P0003"
+          ]
+        },
+        {
+          "ok": true,
+          "hit_count": 7,
+          "ids": [
+            "K01/P0001",
+            "K16/P0002",
+            "K04/P0001",
+            "K07/P0001",
+            "K03/P0001",
+            "K16/P0001",
+            "K16/P0003"
+          ]
+        }
+      ],
+      "decision_basis": "检索命中 8 条；检索命中 7 条"
+    },
+    {
+      "step": 3,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K01",
+        "snippet_id": "P0001"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K01",
+        "snippet_id": "P0001",
+        "characters": 196
+      }
+    },
+    {
+      "step": 4,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K16",
+        "snippet_id": "P0001"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K16",
+        "snippet_id": "P0001",
+        "characters": 61
+      }
+    },
+    {
+      "step": 5,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K16",
+        "snippet_id": "P0002"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K16",
+        "snippet_id": "P0002",
+        "characters": 104
+      }
+    },
+    {
+      "step": 6,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K16",
+        "snippet_id": "P0003"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K16",
+        "snippet_id": "P0003",
+        "characters": 55
+      }
+    },
+    {
+      "step": 7,
+      "tool": "read_snippet",
+      "parameters": {
+        "doc_id": "K04",
+        "snippet_id": "P0001"
+      },
+      "result": {
+        "ok": true,
+        "doc_id": "K04",
+        "snippet_id": "P0001",
+        "characters": 209
+      }
+    },
+    {
+      "step": 8,
+      "action": "finish",
+      "previous_observations": [
+        {
+          "ok": true,
+          "doc_id": "K01",
+          "snippet_id": "P0001",
+          "characters": 196
+        },
+        {
+          "ok": true,
+          "doc_id": "K16",
+          "snippet_id": "P0001",
+          "characters": 61
+        },
+        {
+          "ok": true,
+          "doc_id": "K16",
+          "snippet_id": "P0002",
+          "characters": 104
+        },
+        {
+          "ok": true,
+          "doc_id": "K16",
+          "snippet_id": "P0003",
+          "characters": 55
+        },
+        {
+          "ok": true,
+          "doc_id": "K04",
+          "snippet_id": "P0001",
+          "characters": 209
+        }
+      ],
+      "decision_basis": "已读取 K01/P0001；已读取 K16/P0001；已读取 K16/P0002；已读取 K16/P0003；已读取 K04/P0001"
+    }
+  ],
+  "mode": "online",
+  "model": "deepseek-flash",
+  "executed_at_utc": "2026-11-03T11:34:59.977779+00:00"
+}

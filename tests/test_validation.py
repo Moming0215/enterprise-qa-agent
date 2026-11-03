@@ -52,6 +52,25 @@ def test_conflict_clarification_must_cite_both_read_sources():
     assert validate_answer(answer, evidence, candidates)["error"] == "conflict_requires_both_citations"
 
 
+def test_chunks_from_one_document_are_not_competing_sources():
+    answer = {"status": "answered", "answer": "字幕需要人工校对", "citations": [
+        {"doc_id": "K16", "snippet_id": "P1", "quote": "字幕需要人工校对。"}]}
+    evidence = {("K16", "P1"): {"text": "字幕需要人工校对。", "topic": "subtitle"},
+                ("K16", "P2"): {"text": "校对后再导出。", "topic": "subtitle"}}
+    candidates = [{"doc_id": "K16", "snippet_id": snippet_id, "topic": "subtitle"}
+                  for snippet_id in ("P1", "P2")]
+    assert validate_answer(answer, evidence, candidates, "字幕需要人工校对吗？")["status"] == "answered"
+
+
+def test_unread_chunks_from_same_document_do_not_block_answer():
+    answer = {"status": "answered", "answer": "字幕需要人工校对", "citations": [
+        {"doc_id": "K16", "snippet_id": "P1", "quote": "字幕需要人工校对。"}]}
+    evidence = {("K16", "P1"): {"text": "字幕需要人工校对。", "topic": "subtitle"}}
+    candidates = [{"doc_id": "K16", "snippet_id": snippet_id, "topic": "subtitle"}
+                  for snippet_id in ("P1", "P2")]
+    assert validate_answer(answer, evidence, candidates, "字幕需要人工校对吗？")["status"] == "answered"
+
+
 def test_long_verified_quote_produces_short_answer_and_deduplicates_citations():
     source = "# 字幕流程\n适用对象：客服。\n编辑器可以生成字幕初稿。创作者需要逐句校对字幕中的人名和数字。本文不承诺识别准确率。"
     citation = {"doc_id": "K01", "snippet_id": "P1", "quote": source}

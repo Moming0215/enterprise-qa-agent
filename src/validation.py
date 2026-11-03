@@ -72,7 +72,7 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict], q
     for candidate in candidates:
         competing.setdefault(candidate["topic"], set()).add((candidate["doc_id"], candidate["snippet_id"]))
     for group in competing.values():
-        if len(group) > 1 and group.issubset(read_evidence):
+        if len({doc_id for doc_id, _ in group}) > 1 and group.issubset(read_evidence):
             if len({read_evidence[key]["text"] for key in group}) > 1:
                 if answer["status"] == "answered":
                     return incomplete("unresolved_source_conflict")
@@ -90,7 +90,7 @@ def validate_answer(answer: dict, read_evidence: dict, candidates: list[dict], q
         topics = {read_evidence[key]["topic"] for key in cited}
         for topic in topics:
             expected = {(c["doc_id"], c["snippet_id"]) for c in candidates if c["topic"] == topic}
-            if len(expected) > 1 and not expected.issubset(read_evidence):
+            if len({doc_id for doc_id, _ in expected}) > 1 and not expected.issubset(read_evidence):
                 return incomplete("unread_competing_source")
     normalized = {
         "status": answer["status"],

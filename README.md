@@ -55,7 +55,7 @@
 | 上下文追问 | [在线追问案例](examples/online/followup.json) | 用历史确定所问主题，引用仍来自文档 |
 | 工具失败 | [读取失败案例](examples/video_tool_kb/read_failure.json) | 失败不计为成功；补查后才允许回答 |
 
-另有[达到上限](tests/test_agent.py)、[无效模型输出](examples/video_tool_kb/subtitle_first_attempt.json)、[资料替换后答案改变](examples/online/replaced.json)和[仅保留冲突一方](examples/online/d01_only.json)的验证。在线 Trace 来自较早版本；最新格式修复与问答相关性拦截已通过离线测试，**2026-11-03 DeepSeek 接口返回 HTTP 503，尚未完成新版本的在线重复成功率验证**。
+另有[达到上限](tests/test_agent.py)、[无效模型输出](examples/video_tool_kb/subtitle_first_attempt.json)、[资料替换后答案改变](examples/online/replaced.json)和[仅保留冲突一方](examples/online/d01_only.json)的验证。上表 Trace 来自较早版本。2026-11-03 接口恢复后，当前代码又运行了[正常回答](examples/video_tool_kb_v2/online_subtitle_current.json)、[资料冲突](examples/video_tool_kb_v2/online_conflict_current.json)和[资料不足](examples/video_tool_kb_v2/online_four_k_current.json)三条在线路径，均使用 16 次工具调用上限；另外保留[8 次上限耗尽的记录](examples/video_tool_kb_v2/online_subtitle_step_limit.json)。这些记录证明三条路径在本次运行成功，**尚不足以证明长期稳定性**。
 
 ## 运行项目
 
@@ -86,7 +86,7 @@ if (-not (Test-Path .env)) { Copy-Item .env.example .env }
 .\.venv\Scripts\python.exe -m pytest -q
 ```
 
-Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策；扩大语料后它会机械读取较多候选，所以示例将工具上限设为 30。当前测试结果为 **50 passed**，见[实际输出](examples/video_tool_kb_v2/test-results.txt)。
+Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策；扩大语料后它会机械读取较多候选，所以示例将工具上限设为 30。当前测试结果为 **52 passed**，见[实际输出](examples/video_tool_kb_v2/test-results.txt)。
 
 要模拟工具故障，可在上述命令加 `--fail-tool read_snippet`（只注入一次）。也可改成 `search_documents`。检查输出里的 `trace`，确认失败步骤没有被记录为成功。
 
@@ -95,10 +95,10 @@ Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策
 在本机 `.env` 中填写 `DEEPSEEK_API_KEY`；默认接口与模型写在 [.env.example](.env.example)。不要提交 `.env`。运行：
 
 ```powershell
-.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --output examples/private/online-conflict.json
+.\.venv\Scripts\python.exe -m src.cli --input examples/video_tool_kb/inputs/retention_conflict.json --mode online --index-dir data/index/video_tool_kb --max-steps 16 --output examples/private/online-conflict.json
 ```
 
-CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answered`、`needs_clarification`、`incomplete`）、`answer`、`citations`、`gaps`、`clarifying_question`、`error`、`trace`。`incomplete` 的退出码为 2。自定义问题参照[输入格式](examples/video_tool_kb/inputs/subtitle.json)，可加入 `history` 数组；CLI 参数见 `python -m src.cli --help`。
+CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answered`、`needs_clarification`、`incomplete`）、`answer`、`citations`、`gaps`、`clarifying_question`、`error`、`trace`。`incomplete` 的退出码为 2。命令默认上限为 8 次工具调用；较大语料下模型可能在完成前耗尽步数，上面的演示显式设为 16，仍保留明确上限。自定义问题参照[输入格式](examples/video_tool_kb/inputs/subtitle.json)，可加入 `history` 数组；CLI 参数见 `python -m src.cli --help`。
 
 ### 4. 用自己的问题与资料复现
 

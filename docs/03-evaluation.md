@@ -55,3 +55,9 @@ Mock 在较大语料下会顺序读取全部候选，可能引用无关文档；
 新增格式解析与一次受限修复的离线模拟测试、长引文选句与去重测试，加入下述反例后共 50 项自动测试通过，全套结果见 [`video_tool_kb_v2/test-results.txt`](../examples/video_tool_kb_v2/test-results.txt)。2026-11-03 在线重复试验时，DeepSeek 简单连通测试返回 HTTP 503 `service_unavailable_error`；三次问答均为 `model_error:OpenAIAPIError`，记录见 [`video_tool_kb_v2/`](../examples/video_tool_kb_v2/)。因此当前**不能声称真实模型输出稳定性已验证**，待接口恢复后需在同一组问题上重复运行并报告成功率。旧在线 Trace 只证明旧代码与旧语料的当时行为。
 
 针对“正确引文但答非所问”的关键缺陷，又增加了 MP4 引文冒充 4K/HDR 支持、明确未规定却输出肯定答案、完全无关引用三类反例。新校验将它们降为 `needs_clarification`，同时保留“MP4 可导出”这一有直接证据的正例。测试仅覆盖已列反例；语义相似但实际不支持结论的复杂情况仍可能漏过，不能宣称零无依据回答。
+
+### 提交前在线复测与误判修复（2026-11-03）
+
+DeepSeek 接口恢复后，使用当前代码与 44 份资料索引复测。首次字幕问答返回 `unresolved_source_conflict`：校验器把同一 K16 文档的不同父片段当成了相互冲突的文档。新增两项回归测试后，将竞争资料判定限定为**至少两个不同文档 ID**；同一文档的多个片段不再互相阻断。全套结果为 **52 passed**，见 [`test-results.txt`](../examples/video_tool_kb_v2/test-results.txt)。
+
+当前代码的三条在线记录分别为[字幕回答](../examples/video_tool_kb_v2/online_subtitle_current.json) `answered`、[草稿期限冲突](../examples/video_tool_kb_v2/online_conflict_current.json) `needs_clarification`（含 K13/K14 双方引文）、[4K HDR 资料不足](../examples/video_tool_kb_v2/online_four_k_current.json) `needs_clarification`。这三次均显式设置 `--max-steps 16`。字幕回答引用了相关但并非回答所必需的 K16、K04，仍显冗长。另一次字幕运行设为默认 8 次上限，模型继续检索而耗尽步数，正确返回 `incomplete:step_limit`，见[失败 Trace](../examples/video_tool_kb_v2/online_subtitle_step_limit.json)。因此当前只能证明这些实际运行路径，不能宣称稳定成功率；默认上限较紧，应按语料规模显式设置，并继续做重复试验。
