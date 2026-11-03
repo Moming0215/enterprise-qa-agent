@@ -1,7 +1,5 @@
 # 企业知识问答 Agent
 
-> 小影科技校招笔试 · 题号 3 · CLI 项目
-
 员工问“删除的云端草稿在回收站保留多久？”时，系统会先检索，再读取相关制度原文。若两份资料分别写着 30 天和 15 天，且没有说明适用范围或优先级，结果就列出双方引文并请求确认，而不是替用户选一个期限。
 
 本仓库是可运行的 CLI 项目，提供 DeepSeek 在线模型与离线 Mock 两条入口。所有制度、产品能力和案例均为**合成资料**，不代表真实小影科技的政策或产品承诺。
@@ -46,7 +44,7 @@
 | **资料冲突** | K13 写 30 天，K14 写 15 天；不擅自选新版本，要求确认适用制度。 | [输入](examples/video_tool_kb/inputs/retention_conflict.json) · [Trace](examples/video_tool_kb/retention_conflict.json) |
 | **资料不足** | MP4 导出说明不能证明支持 4K HDR；请求补充资料。 | [输入](examples/video_tool_kb/inputs/four_k_unknown.json) · [Trace](examples/video_tool_kb/four_k_unknown.json) |
 
-题目要求的六种情况都能在仓库核对：
+六种核心场景都能在仓库核对：
 
 | 验收点 | 核对位置 | 预期边界 |
 |---|---|---|
@@ -158,7 +156,7 @@ CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answe
 
 | 想了解 | 入口 |
 |---|---|
-| 题目需求、成功标准 | [docs/01-requirements.md](docs/01-requirements.md) |
+| 需求与成功标准 | [docs/01-requirements.md](docs/01-requirements.md) |
 | Agent 决策循环与 Trace | [src/agent.py](src/agent.py) |
 | 文档摄取与混合检索 | [src/ingestion.py](src/ingestion.py) · [src/hybrid_knowledge.py](src/hybrid_knowledge.py) |
 | 引用、冲突与输出校验 | [src/validation.py](src/validation.py) · [src/output_format.py](src/output_format.py) |
