@@ -1,4 +1,4 @@
-# 有证据的企业知识问答 Agent
+# 🔎 有证据的企业知识问答 Agent
 
 > **题号 3 · 企业知识问答 Agent**｜让员工找到答案，也看得见答案从哪里来。
 
@@ -6,29 +6,11 @@
 
 本仓库是可运行的 CLI 项目，提供 DeepSeek 在线模型与离线 Mock 两条入口。所有制度、产品能力和案例均为**合成资料**，不代表真实小影科技的政策或产品承诺。
 
-## 一眼看懂
+## ✨ 一眼看懂
 
-```mermaid
-flowchart LR
-    subgraph 建库[离线建库]
-        A[Markdown / 文本 PDF] --> B[按标题或页提取]
-        B --> C[父片段保留原文位置]
-        C --> D[子片段向量化]
-        D --> E[(本地 Qdrant 混合索引)]
-    end
-    subgraph 问答[一次问答]
-        Q[员工问题] --> M{模型选择动作}
-        M -->|检索| E
-        E --> R[融合候选并补查同主题资料]
-        R --> M
-        M -->|读取| S[原文、版本、适用范围]
-        S --> M
-        M -->|回答或追问| V{证据校验}
-        V -->|充分| Y[有引用的回答]
-        V -->|冲突或不足| N[列出缺口，请求确认]
-        V -->|工具或模型失败| F[明确未完成]
-    end
-```
+![从企业资料到可信答案：建库、Agent 取证与三种输出状态](docs/assets/architecture.png)
+
+流程图由[响应式 HTML 原稿](docs/architecture.html)渲染；GitHub 首页显示上方预览，下载 HTML 后可在浏览器中单独打开。
 
 | 能力 | 当前实现 |
 |---|---|
@@ -39,7 +21,7 @@ flowchart LR
 | **可审阅 Trace** | 记录动作、工具参数、返回摘要、后续动作和简要依据，不暴露模型内部思维。 |
 | **故障边界** | 工具错误、调用超限、无效模型输出和接口故障返回明确状态；无效 JSON 最多尝试一次格式修复。 |
 
-## 三个值得亲自看的例子
+## 🧭 三个值得亲自看的例子
 
 | 场景 | 观察结果 | 输入与真实模型记录 |
 |---|---|---|
@@ -49,7 +31,7 @@ flowchart LR
 
 另外保存了[一次读取失败后补查的 Trace](examples/video_tool_kb/read_failure.json)和[两次无效 JSON 的失败记录](examples/video_tool_kb/subtitle_first_attempt.json)。这些在线记录来自较早版本；最新格式修复与问答相关性拦截已通过离线测试，**2026-11-03 DeepSeek 接口返回 HTTP 503，尚未完成新版本的在线重复成功率验证**。
 
-## 快速跑起来
+## 🚀 快速跑起来
 
 环境：Python 3.11+、PowerShell。首次安装：
 
@@ -88,7 +70,7 @@ Mock 只证明工具链与边界规则，不能证明真实模型会怎样决策
 
 CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answered`、`needs_clarification`、`incomplete`）、`answer`、`citations`、`gaps`、`clarifying_question`、`error`、`trace`。`incomplete` 的退出码为 2。自定义问题参照[输入格式](examples/video_tool_kb/inputs/subtitle.json)，可加入 `history` 数组；CLI 参数见 `python -m src.cli --help`。
 
-## 资料、效果与边界
+## 📚 资料、效果与边界
 
 [短视频工具模拟知识库](data/video_tool_kb/README.md)有 **44 份 Markdown、约 9,405 个汉字**，覆盖产品、授权、发布、客服、数据与安全流程；索引生成 104 个父片段和 104 个子片段。K13/K14 是故意保留的冲突资料。解析器也支持**可提取文字的 PDF**，有相应[测试](tests/test_hybrid_knowledge.py)。原始 JSON 小语料仍可通过 `--corpus` 使用，作为简化对照。
 
@@ -102,7 +84,7 @@ CLI 在终端打印结果，同时保存 JSON。主要字段：`status`（`answe
 
 输出中的 `hybrid` 对应本知识库；`legacy` 使用另一套 JSON 小语料，不应直接比较。当前没有扫描 PDF OCR、DOCX/表格解析、文档权限控制、增量索引或通用语义蕴含证明；同主题冲突扩展依赖元数据。详见[评估记录](docs/03-evaluation.md)与[企业文档扩展设计](docs/06-enterprise-rag-extension.md)。
 
-## 从哪里看代码
+## 🧩 从哪里看代码
 
 | 想了解 | 入口 |
 |---|---|

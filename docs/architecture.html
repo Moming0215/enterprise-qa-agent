@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <title>有证据的企业知识问答 Agent · 工作流程</title>
+  <style>
+    :root { color-scheme: dark; --bg:#09111f; --panel:#111d31; --line:#29405f; --text:#edf5ff; --muted:#9fb2ca; --cyan:#55d9e8; --violet:#a78bfa; --amber:#ffcd74; --green:#71e6aa; --red:#fa9aa1; }
+    * { box-sizing:border-box; }
+    body { margin:0; min-height:100vh; color:var(--text); font-family:Inter,"Segoe UI","Microsoft YaHei",system-ui,sans-serif; background: radial-gradient(circle at 15% 0%,#153a51 0%,transparent 30%),radial-gradient(circle at 88% 8%,#282354 0%,transparent 28%),var(--bg); }
+    main { max-width:1480px; margin:auto; padding:48px 54px 42px; }
+    .eyebrow { display:inline-flex; align-items:center; gap:10px; border:1px solid #315d71; border-radius:100px; padding:8px 14px; color:#a3eff0; background:#12334288; font-size:12px; font-weight:800; letter-spacing:.16em; }
+    .spark { width:7px; height:7px; border-radius:50%; background:#59dfd9; box-shadow:0 0 12px #59dfd9; }
+    h1 { margin:17px 0 8px; font-size:clamp(34px,3.4vw,52px); line-height:1.13; letter-spacing:-.04em; }
+    .lead { margin:0; color:var(--muted); font-size:17px; line-height:1.7; }
+    .lead strong { color:#f3f8ff; font-weight:700; }
+    .section-head { display:flex; align-items:center; justify-content:space-between; gap:16px; margin:38px 0 15px; }
+    .section-head h2 { margin:0; font-size:18px; letter-spacing:.01em; }
+    .section-head h2 span { color:#6edce7; font-size:12px; letter-spacing:.2em; margin-right:12px; }
+    .section-head p { margin:0; color:#8298b5; font-size:12px; }
+    .flow { display:grid; gap:24px; align-items:stretch; }
+    .build { grid-template-columns:repeat(3,minmax(0,1fr)); }
+    .ask { grid-template-columns:repeat(5,minmax(0,1fr)); }
+    .card { position:relative; min-height:142px; padding:21px 20px 19px; border:1px solid var(--line); border-radius:20px; background:linear-gradient(150deg,#16243b 0%,#101b2c 100%); box-shadow:0 16px 30px #0208123d, inset 0 1px #ffffff0c; overflow:visible; }
+    .card::before { content:""; position:absolute; left:0; top:22px; bottom:22px; width:3px; border-radius:3px; background:var(--accent); box-shadow:0 0 14px var(--accent); }
+    .card:not(:last-child)::after { content:"→"; position:absolute; right:-22px; top:50%; transform:translateY(-50%); color:#74a9c4; font-size:24px; font-weight:300; z-index:2; }
+    .cyan { --accent:var(--cyan); } .violet { --accent:var(--violet); } .amber { --accent:var(--amber); } .green { --accent:var(--green); }
+    .icon { display:grid; place-items:center; width:40px; height:40px; border-radius:12px; margin-bottom:12px; font-size:20px; background:color-mix(in srgb,var(--accent) 14%,transparent); border:1px solid color-mix(in srgb,var(--accent) 32%,transparent); }
+    .card h3 { margin:0 0 7px; font-size:16px; line-height:1.25; }
+    .card p { margin:0; color:#aebfd4; font-size:12px; line-height:1.55; }
+    .card small { display:block; margin-top:11px; color:var(--accent); font-size:11px; font-weight:750; letter-spacing:.02em; }
+    .bridge { margin:20px auto 0; width:max-content; max-width:100%; display:flex; align-items:center; gap:13px; color:#9bd8e7; font-size:12px; font-weight:700; }
+    .bridge::before,.bridge::after { content:""; width:48px; height:1px; background:#477b93; }
+    .bridge b { font-size:18px; font-weight:400; }
+    .ask .card { min-height:168px; }
+    .ask .card h3 { font-size:15px; }
+    .loop { display:flex; align-items:center; justify-content:center; gap:14px; margin:18px 0 0; padding:12px 18px; border:1px dashed #436480; border-radius:12px; color:#b9d7eb; background:#14273b8c; font-size:13px; }
+    .loop b { color:#6ee0e8; font-size:20px; line-height:1; }
+    .outcomes { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:15px; }
+    .outcome { display:flex; align-items:flex-start; gap:13px; padding:17px 18px; border:1px solid #2a415a; border-radius:16px; background:#132239bd; }
+    .outcome .mark { display:grid; place-items:center; width:31px; height:31px; flex:none; border-radius:9px; font-size:16px; font-weight:800; }
+    .outcome h3 { margin:0 0 3px; font-size:14px; }
+    .outcome p { margin:0; color:#9cb0c9; font-size:12px; line-height:1.5; }
+    .yes .mark { background:#1b674f; color:#9cf1c4; } .maybe .mark { background:#67502b; color:#ffe1a2; } .stop .mark { background:#673a4e; color:#ffc4ce; }
+    footer { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-top:26px; padding-top:17px; border-top:1px solid #263850; color:#8398b2; font-size:11px; }
+    footer strong { color:#bbd3e6; }
+    @media(max-width:1000px) { main { padding:34px 24px; } .ask { grid-template-columns:repeat(3,minmax(0,1fr)); } .ask .card:nth-child(3)::after { display:none; } }
+    @media(max-width:680px) { main { padding:28px 18px; } .section-head { align-items:flex-start; flex-direction:column; gap:3px; } .build,.ask,.outcomes { grid-template-columns:1fr; } .card,.ask .card { min-height:auto; } .card:not(:last-child)::after { content:"↓"; top:auto; bottom:-28px; right:50%; transform:translateX(50%); } .ask .card:nth-child(3)::after { display:block; } .flow { gap:25px; } .bridge::before,.bridge::after { width:20px; } .loop { align-items:flex-start; text-align:left; } footer { flex-direction:column; align-items:flex-start; } }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="eyebrow"><i class="spark"></i> EVIDENCE-FIRST · AGENTIC RAG</div>
+    <h1>从企业资料，到可信答案</h1>
+    <p class="lead">一条可审阅的问答路径：<strong>先找线索，读原文，再决定回答还是追问。</strong></p>
+
+    <div class="section-head"><h2><span>01 / BUILD</span>把资料变成可追溯的索引</h2><p>离线运行 · 保留原文件与位置</p></div>
+    <div class="flow build">
+      <article class="card cyan"><div class="icon">📁</div><h3>收集企业资料</h3><p>Markdown、文本 PDF，以及文档 ID、版本日期和适用范围。</p><small>SOURCE DOCUMENTS</small></article>
+      <article class="card violet"><div class="icon">🧩</div><h3>解析与双层分块</h3><p>子片段负责检索；父片段保留完整语境、章节或页码。</p><small>PARENT / CHILD CHUNKS</small></article>
+      <article class="card cyan"><div class="icon">◈</div><h3>建立混合索引</h3><p>中文语义向量 + BM25 关键词索引，写入本地 Qdrant。</p><small>DENSE + SPARSE</small></article>
+    </div>
+
+    <div class="bridge"><b>↓</b> 检索候选始终能回到原文 <b>↓</b></div>
+    <div class="section-head"><h2><span>02 / ANSWER</span>让模型选择动作，让证据决定边界</h2><p>在线模型或离线 Mock</p></div>
+    <div class="flow ask">
+      <article class="card violet"><div class="icon">💬</div><h3>员工提出问题</h3><p>可附对话历史；历史只用于理解追问，不作为事实证据。</p><small>QUESTION</small></article>
+      <article class="card cyan"><div class="icon">◇</div><h3>Agent 选择下一步</h3><p>LangGraph 循环：检索、读取、补查，或结束。</p><small>MODEL → TOOL</small></article>
+      <article class="card violet"><div class="icon">🔎</div><h3>融合并扩展候选</h3><p>RRF 合并两路召回；补查同主题和显式关联资料。</p><small>RETRIEVE + EXPAND</small></article>
+      <article class="card amber"><div class="icon">📖</div><h3>读取证据原文</h3><p>引用必须来自本轮成功读取的片段，带文件位置与版本。</p><small>READ SOURCE</small></article>
+      <article class="card green"><div class="icon">🛡️</div><h3>校验后输出</h3><p>核对逐字引用、竞争资料和问题要点；不足则不下结论。</p><small>VERIFY + RESPOND</small></article>
+    </div>
+    <div class="loop"><b>↺</b><span>工具观察返回模型：遇到冲突可补读另一份资料，遇到失败可重选动作；每步都记录在 Trace。</span></div>
+
+    <div class="section-head"><h2><span>03 / RESULT</span>把不确定性说清楚</h2><p>三种明确状态</p></div>
+    <div class="outcomes">
+      <article class="outcome yes"><span class="mark">✓</span><div><h3>有依据的回答</h3><p>给出简短结论、文档 ID 和可核对的原文引文。</p></div></article>
+      <article class="outcome maybe"><span class="mark">?</span><div><h3>请求确认</h3><p>例如 30 天与 15 天冲突；列双方，不擅自裁决。</p></div></article>
+      <article class="outcome stop"><span class="mark">!</span><div><h3>明确未完成</h3><p>工具或模型失败、达到调用上限时，不虚报成功。</p></div></article>
+    </div>
+    <footer><span><strong>企业知识问答 Agent · 题号 3</strong>　/　短视频工具业务合成资料</span><span>所有案例均为演示，不代表真实公司政策</span></footer>
+  </main>
+</body>
+</html>
